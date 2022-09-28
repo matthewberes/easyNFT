@@ -1,0 +1,15 @@
+C:\Users\matty\source\repos\easyNFT\bin\Debug\netcoreapp3.1\easyNFT.exe
+C:\Users\matty\source\repos\easyNFT\bin\Debug\netcoreapp3.1\easyNFT.deps.json
+C:\Users\matty\source\repos\easyNFT\bin\Debug\netcoreapp3.1\easyNFT.runtimeconfig.json
+C:\Users\matty\source\repos\easyNFT\bin\Debug\netcoreapp3.1\easyNFT.runtimeconfig.dev.json
+C:\Users\matty\source\repos\easyNFT\bin\Debug\netcoreapp3.1\easyNFT.dll
+C:\Users\matty\source\repos\easyNFT\bin\Debug\netcoreapp3.1\easyNFT.pdb
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.csprojAssemblyReference.cache
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.Form1.resources
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.csproj.GenerateResource.cache
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.AssemblyInfoInputs.cache
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.AssemblyInfo.cs
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.csproj.CoreCompileInputs.cache
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.dll
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.pdb
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.genruntimeconfig.cache
