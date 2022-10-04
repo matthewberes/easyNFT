@@ -90,7 +90,7 @@ namespace easyNFT
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(94, 29);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Next";
+            this.button1.Text = "Submit";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -163,9 +163,19 @@ namespace easyNFT
             0,
             0,
             0});
+            this.qtyAtr1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr1.Name = "qtyAtr1";
             this.qtyAtr1.Size = new System.Drawing.Size(43, 27);
             this.qtyAtr1.TabIndex = 6;
+            this.qtyAtr1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr1.Visible = false;
             // 
             // qtyAtr2
@@ -176,9 +186,19 @@ namespace easyNFT
             0,
             0,
             0});
+            this.qtyAtr2.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr2.Name = "qtyAtr2";
             this.qtyAtr2.Size = new System.Drawing.Size(43, 27);
             this.qtyAtr2.TabIndex = 10;
+            this.qtyAtr2.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr2.Visible = false;
             // 
             // inputNameAtr2
@@ -217,9 +237,19 @@ namespace easyNFT
             0,
             0,
             0});
+            this.qtyAtr3.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr3.Name = "qtyAtr3";
             this.qtyAtr3.Size = new System.Drawing.Size(43, 27);
             this.qtyAtr3.TabIndex = 14;
+            this.qtyAtr3.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr3.Visible = false;
             // 
             // inputNameAtr3
@@ -258,9 +288,19 @@ namespace easyNFT
             0,
             0,
             0});
+            this.qtyAtr4.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr4.Name = "qtyAtr4";
             this.qtyAtr4.Size = new System.Drawing.Size(43, 27);
             this.qtyAtr4.TabIndex = 18;
+            this.qtyAtr4.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr4.Visible = false;
             // 
             // inputNameAtr4
@@ -299,9 +339,19 @@ namespace easyNFT
             0,
             0,
             0});
+            this.qtyAtr5.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr5.Name = "qtyAtr5";
             this.qtyAtr5.Size = new System.Drawing.Size(43, 27);
             this.qtyAtr5.TabIndex = 22;
+            this.qtyAtr5.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr5.Visible = false;
             // 
             // inputNameAtr5
@@ -340,9 +390,19 @@ namespace easyNFT
             0,
             0,
             0});
+            this.qtyAtr6.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr6.Name = "qtyAtr6";
             this.qtyAtr6.Size = new System.Drawing.Size(43, 27);
             this.qtyAtr6.TabIndex = 26;
+            this.qtyAtr6.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr6.Visible = false;
             // 
             // inputNameAtr6
@@ -381,9 +441,19 @@ namespace easyNFT
             0,
             0,
             0});
+            this.qtyAtr7.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr7.Name = "qtyAtr7";
             this.qtyAtr7.Size = new System.Drawing.Size(43, 27);
             this.qtyAtr7.TabIndex = 30;
+            this.qtyAtr7.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr7.Visible = false;
             // 
             // inputNameAtr7
@@ -422,9 +492,19 @@ namespace easyNFT
             0,
             0,
             0});
+            this.qtyAtr8.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr8.Name = "qtyAtr8";
             this.qtyAtr8.Size = new System.Drawing.Size(43, 27);
             this.qtyAtr8.TabIndex = 34;
+            this.qtyAtr8.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr8.Visible = false;
             // 
             // inputNameAtr8
@@ -463,9 +543,19 @@ namespace easyNFT
             0,
             0,
             0});
+            this.qtyAtr9.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr9.Name = "qtyAtr9";
             this.qtyAtr9.Size = new System.Drawing.Size(43, 27);
             this.qtyAtr9.TabIndex = 38;
+            this.qtyAtr9.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr9.Visible = false;
             // 
             // inputNameAtr9
@@ -504,9 +594,19 @@ namespace easyNFT
             0,
             0,
             0});
+            this.qtyAtr10.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr10.Name = "qtyAtr10";
             this.qtyAtr10.Size = new System.Drawing.Size(43, 27);
             this.qtyAtr10.TabIndex = 42;
+            this.qtyAtr10.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.qtyAtr10.Visible = false;
             // 
             // inputNameAtr10

@@ -14,11 +14,26 @@ namespace easyNFT
 {
     public partial class Form2 : Form
     {
-        public Form2()
+        public Form mainForm;
+
+        public int globalAtr1;
+        public int globalAtr2;
+        public int globalAtr3;
+        public int globalAtr4;
+        public int globalAtr5;
+        public int globalAtr6;
+        public int globalAtr7;
+        public int globalAtr8;
+        public int globalAtr9;
+        public int globalAtr10;
+        public userInput curSeshF2 { get; set; }
+        public Form2(Form curForm)
         {
             InitializeComponent();
+            mainForm = curForm;
 
-            Point atr1 = new Point(118,166);
+            //button placement
+            Point atr1 = new Point(118, 166);
             Point atr2 = new Point(118, 255);
             Point atr3 = new Point(118, 342);
             Point atr4 = new Point(118, 431);
@@ -29,15 +44,119 @@ namespace easyNFT
             Point atr9 = new Point(118, 868);
             Point atr10 = new Point(118, 936);
         }
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            buttonPlacement();
+            setHeaders(this);
+
+        }
+        public void buttonPlacement()
+        {
+            Control submitButton = this.Controls.Find("submitButton", true).Single();
+            switch (this.curSeshF2.totalAtr)
+            {
+                case 1:
+                    submitButton.Location = new Point(118, 130);
+                    break;
+                case 2:
+                    submitButton.Location = new Point(118, 220);
+                    break;
+                case 3:
+                    submitButton.Location = new Point(118, 310);
+                    break;
+                case 4:
+                    submitButton.Location = new Point(118, 395);
+                    break;
+                case 5:
+                    submitButton.Location = new Point(118, 480);
+                    break;
+                case 6:
+                    submitButton.Location = new Point(118, 570);
+                    break;
+                case 7:
+                    submitButton.Location = new Point(118, 660);
+                    break;
+                case 8:
+                    submitButton.Location = new Point(118, 750);
+                    break;
+                case 9:
+                    submitButton.Location = new Point(118, 840);
+                    break;
+                case 10:
+                    submitButton.Location = new Point(118, 936);
+                    break;
+            }
+        }
+
+        //Changes ttlAtr in form 2 to the corresponding user input in form 1
+        public void setHeaders(Form2 curForm)
+        {
+            Dictionary<string, Control> names = new Dictionary<string, Control>();
+
+            names["q1"] = curForm.mainForm.Controls.Find("qtyAtr1", true).Single();
+            names["q2"] = curForm.mainForm.Controls.Find("qtyAtr2", true).Single();
+            names["q3"] = curForm.mainForm.Controls.Find("qtyAtr3", true).Single();
+            names["q4"] = curForm.mainForm.Controls.Find("qtyAtr4", true).Single();
+            names["q5"] = curForm.mainForm.Controls.Find("qtyAtr5", true).Single();
+            names["q6"] = curForm.mainForm.Controls.Find("qtyAtr6", true).Single();
+            names["q7"] = curForm.mainForm.Controls.Find("qtyAtr7", true).Single();
+            names["q8"] = curForm.mainForm.Controls.Find("qtyAtr8", true).Single();
+            names["q9"] = curForm.mainForm.Controls.Find("qtyAtr9", true).Single();
+            names["q10"] = curForm.mainForm.Controls.Find("qtyAtr10", true).Single();
+
+            for (int i = 1; i <= curForm.curSeshF2.totalAtr; i++)
+            {
+                string tempF1 = "inputNameAtr" + i.ToString();
+                string tempF2 = "ttlAtr" + i.ToString();
+                string tempBtn = "btnAtr" + i.ToString();
+                Control ctrlF1 = curForm.mainForm.Controls.Find(tempF1, true).Single();
+                Control ctrlF2 = curForm.Controls.Find(tempF2, true).Single();
+                Control ctrlBtn = curForm.Controls.Find(tempBtn, true).Single();
+
+                //set up titles and upload buttons
+                ctrlF2.Text = ctrlF1.Text;
+                ctrlF2.Visible = true;
+                ctrlBtn.Visible = true;
+                //set up indexes
+                string temp = "q" + i.ToString();
+                setVisible(this, names[temp], i);
+            }
+        }
+
+        public void setVisible(Form2 curForm, Control indexNum, int curAtr)
+        {
+            int qty = ((int)((NumericUpDown)indexNum).Value);
+
+            for (int i = 1; i <= qty; i++)
+            {
+                string tempLow = "lowIndex" + i.ToString() + "Atr" + curAtr.ToString();
+                string tempHigh = "highIndex" + i.ToString() + "Atr" + curAtr.ToString();
+                string tempLbl = "index" + i.ToString() + "Atr" + curAtr.ToString();
+                Control ctrlLow = curForm.Controls.Find(tempLow, true).Single();
+                Control ctrlHigh = curForm.Controls.Find(tempHigh, true).Single();
+                Control ctrlLbl = curForm.Controls.Find(tempLbl, true).Single();
+
+                ctrlLow.Visible = true;
+                ctrlHigh.Visible = true;
+                ctrlLbl.Visible = true;
+            } 
+        }
+
         private void btnAtr1_Click(object sender, EventArgs e)
         {
+            Control maxFile = this.mainForm.Controls.Find("qtyAtr1", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
-                //int hatNum = dialog.FileNames.Length;
-                //label1.Text = hatNum.ToString();
+                if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
+                {
+                    MessageBox.Show("Too many files selected for atr1", "Error: Stack Overflow");
+                    return;
+                }
+                globalAtr1 = dialog.FileNames.Length;
+
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -50,11 +169,19 @@ namespace easyNFT
 
         private void btnAtr2_Click(object sender, EventArgs e)
         {
+            Control maxFile = this.mainForm.Controls.Find("qtyAtr2", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
+                {
+                    MessageBox.Show("Too many files selected for atr2", "Error: Stack Overflow");
+                    return;
+                }
+                globalAtr2 = dialog.FileNames.Length;
+
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -67,11 +194,19 @@ namespace easyNFT
 
         private void btnAtr3_Click(object sender, EventArgs e)
         {
+            Control maxFile = this.mainForm.Controls.Find("qtyAtr3", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
+                {
+                    MessageBox.Show("Too many files selected for atr3", "Error: Stack Overflow");
+                    return;
+                }
+                globalAtr3 = dialog.FileNames.Length;
+
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -84,11 +219,19 @@ namespace easyNFT
 
         private void btnAtr4_Click(object sender, EventArgs e)
         {
+            Control maxFile = this.mainForm.Controls.Find("qtyAtr4", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
+                {
+                    MessageBox.Show("Too many files selected for atr4", "Error: Stack Overflow");
+                    return;
+                }
+                globalAtr4 = dialog.FileNames.Length;
+
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -101,11 +244,19 @@ namespace easyNFT
 
         private void btnAtr5_Click(object sender, EventArgs e)
         {
+            Control maxFile = this.mainForm.Controls.Find("qtyAtr5", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
+                {
+                    MessageBox.Show("Too many files selected for atr5", "Error: Stack Overflow");
+                    return;
+                }
+                globalAtr5 = dialog.FileNames.Length;
+
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -118,11 +269,19 @@ namespace easyNFT
 
         private void btnAtr6_Click(object sender, EventArgs e)
         {
+            Control maxFile = this.mainForm.Controls.Find("qtyAtr6", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
+                {
+                    MessageBox.Show("Too many files selected for atr6", "Error: Stack Overflow");
+                    return;
+                }
+                globalAtr6 = dialog.FileNames.Length;
+
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -135,11 +294,19 @@ namespace easyNFT
 
         private void btnAtr7_Click(object sender, EventArgs e)
         {
+            Control maxFile = this.mainForm.Controls.Find("qtyAtr7", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
+                {
+                    MessageBox.Show("Too many files selected for atr7", "Error: Stack Overflow");
+                    return;
+                }
+                globalAtr7 = dialog.FileNames.Length;
+
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -152,11 +319,19 @@ namespace easyNFT
 
         private void btnAtr8_Click(object sender, EventArgs e)
         {
+            Control maxFile = this.mainForm.Controls.Find("qtyAtr8", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
+                {
+                    MessageBox.Show("Too many files selected for atr8", "Error: Stack Overflow");
+                    return;
+                }
+                globalAtr8 = dialog.FileNames.Length;
+
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -169,11 +344,19 @@ namespace easyNFT
 
         private void btnAtr9_Click(object sender, EventArgs e)
         {
+            Control maxFile = this.mainForm.Controls.Find("qtyAtr9", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
+                {
+                    MessageBox.Show("Too many files selected for atr9", "Error: Stack Overflow");
+                    return;
+                }
+                globalAtr9 = dialog.FileNames.Length;
+
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -186,11 +369,19 @@ namespace easyNFT
 
         private void btnAtr10_Click(object sender, EventArgs e)
         {
+            Control maxFile = this.mainForm.Controls.Find("qtyAtr10", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
+                {
+                    MessageBox.Show("Too many files selected for atr10", "Error: Stack Overflow");
+                    return;
+                }
+                globalAtr10 = dialog.FileNames.Length;
+
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -202,7 +393,7 @@ namespace easyNFT
         }
 
         //connects the name string to its corresponding control
-        public class variableNames : Control{
+        public class variableNames : Control {
 
             Control controlName;
             string name;
@@ -223,7 +414,7 @@ namespace easyNFT
         }
         static void boundCheckAtr(int atrVal, int indexNum)
         {
- 
+
             for (int i = 1; i < indexNum; i++)
             {
                 //currIndexLOW
@@ -235,11 +426,11 @@ namespace easyNFT
                 variableNames curHighClass = new variableNames(curHighString);
                 Control curHighControl = curHighClass.getControl();
                 //nextIndexLOW
-                string nextLowString = String.Format("lowIndex" + (i+1).ToString() + "Atr" + atrVal.ToString());
+                string nextLowString = String.Format("lowIndex" + (i + 1).ToString() + "Atr" + atrVal.ToString());
                 variableNames nextLowClass = new variableNames(nextLowString);
                 Control nextLowControl = nextLowClass.getControl();
                 //prevIndexHIGH
-                string prevHighString = String.Format("highIndex" + (i-1).ToString() + "Atr" + atrVal.ToString());
+                string prevHighString = String.Format("highIndex" + (i - 1).ToString() + "Atr" + atrVal.ToString());
                 variableNames prevHighClass = new variableNames(prevHighString);
                 Control prevHighControl = prevHighClass.getControl();
 
@@ -247,23 +438,89 @@ namespace easyNFT
                 if (((NumericUpDown)curLowControl).Value > ((NumericUpDown)curHighControl).Value)
                 {
                     //Error
-                    MessageBox.Show(curLowString + " is larger than " + curHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                } 
+                    MessageBox.Show(curLowString.ToString() + " is larger than " + curHighString.ToString(), "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 //if currIndexLOW < prevIndexHIGH
                 if (((NumericUpDown)curLowControl).Value < ((NumericUpDown)prevHighControl).Value)
                 {
                     //Error
-                    MessageBox.Show(curLowString + " is less than " + prevHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(curLowString.ToString() + " is less than " + prevHighString.ToString(), "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 //if currentIndexHIGH > nextIndexLOW
                 if (((NumericUpDown)curHighControl).Value > ((NumericUpDown)nextLowControl).Value)
                 {
                     //Error
-                    MessageBox.Show(curLowString + " is larger than " + curHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(curLowString.ToString() + " is larger than " + curHighString.ToString(), "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            } 
+            }
+        }
+
+        private void submitButton_Click(object sender, EventArgs e)
+        {
+            Control maxFile1 = this.mainForm.Controls.Find("qtyAtr1", true).Single();
+            Control maxFile2 = this.mainForm.Controls.Find("qtyAtr2", true).Single();
+            Control maxFile3 = this.mainForm.Controls.Find("qtyAtr3", true).Single();
+            Control maxFile4 = this.mainForm.Controls.Find("qtyAtr4", true).Single();
+            Control maxFile5 = this.mainForm.Controls.Find("qtyAtr5", true).Single();
+            Control maxFile6 = this.mainForm.Controls.Find("qtyAtr6", true).Single();
+            Control maxFile7 = this.mainForm.Controls.Find("qtyAtr7", true).Single();
+            Control maxFile8 = this.mainForm.Controls.Find("qtyAtr8", true).Single();
+            Control maxFile9 = this.mainForm.Controls.Find("qtyAtr9", true).Single();
+            Control maxFile10 = this.mainForm.Controls.Find("qtyAtr10", true).Single();
+
+            if (btnAtr1.Visible == true && globalAtr1 < ((NumericUpDown)maxFile1).Value)
+            {
+                MessageBox.Show("Not enough files for atr1", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (btnAtr2.Visible == true && globalAtr2 < ((NumericUpDown)maxFile2).Value)
+            {
+                MessageBox.Show("Not enough files for atr2", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (btnAtr3.Visible == true && globalAtr3 < ((NumericUpDown)maxFile3).Value)
+            {
+                MessageBox.Show("Not enough files for atr3", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (btnAtr4.Visible == true && globalAtr4 < ((NumericUpDown)maxFile4).Value)
+            {
+                MessageBox.Show("Not enough files for atr4", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (btnAtr5.Visible == true && globalAtr5 < ((NumericUpDown)maxFile5).Value)
+            {
+                MessageBox.Show("Not enough files for atr5", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (btnAtr6.Visible == true && globalAtr6 < ((NumericUpDown)maxFile6).Value)
+            {
+                MessageBox.Show("Not enough files for atr6", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (btnAtr7.Visible == true && globalAtr7 < ((NumericUpDown)maxFile7).Value)
+            {
+                MessageBox.Show("Not enough files for atr7", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (btnAtr8.Visible == true && globalAtr8 < ((NumericUpDown)maxFile8).Value)
+            {
+                MessageBox.Show("Not enough files for atr8", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (btnAtr9.Visible == true && globalAtr9 < ((NumericUpDown)maxFile9).Value)
+            {
+                MessageBox.Show("Not enough files for atr9", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (btnAtr10.Visible == true && globalAtr10 < ((NumericUpDown)maxFile10).Value)
+            {
+                MessageBox.Show("Not enough files for atr10", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
         }
     }
 }

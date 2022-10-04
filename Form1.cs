@@ -13,7 +13,7 @@ using System.Reflection;
 namespace easyNFT
 {
     public partial class Form1 : Form
-    {        
+    {
         public Form1()
         {
             InitializeComponent();
@@ -22,8 +22,190 @@ namespace easyNFT
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form2 test = new Form2();
-            test.Show();
+            userInput curSesh = new userInput();
+
+            Control n1 = this.Controls.Find("inputNameAtr1", true).Single();
+            Control n2 = this.Controls.Find("inputNameAtr2", true).Single();
+            Control n3 = this.Controls.Find("inputNameAtr3", true).Single();
+            Control n4 = this.Controls.Find("inputNameAtr4", true).Single();
+            Control n5 = this.Controls.Find("inputNameAtr5", true).Single();
+            Control n6 = this.Controls.Find("inputNameAtr6", true).Single();
+            Control n7 = this.Controls.Find("inputNameAtr7", true).Single();
+            Control n8 = this.Controls.Find("inputNameAtr8", true).Single();
+            Control n9 = this.Controls.Find("inputNameAtr9", true).Single();
+            Control n10 = this.Controls.Find("inputNameAtr10", true).Single();
+
+            Control q1 = this.Controls.Find("qtyAtr1", true).Single();
+            Control q2 = this.Controls.Find("qtyAtr2", true).Single();
+            Control q3 = this.Controls.Find("qtyAtr3", true).Single();
+            Control q4 = this.Controls.Find("qtyAtr4", true).Single();
+            Control q5 = this.Controls.Find("qtyAtr5", true).Single();
+            Control q6 = this.Controls.Find("qtyAtr6", true).Single();
+            Control q7 = this.Controls.Find("qtyAtr7", true).Single();
+            Control q8 = this.Controls.Find("qtyAtr8", true).Single();
+            Control q9 = this.Controls.Find("qtyAtr9", true).Single();
+            Control q10 = this.Controls.Find("qtyAtr10", true).Single();
+            
+            if(n1.Text == "" && n1.Visible == true)
+            {
+                MessageBox.Show("Atr 1 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (n2.Text == "" && n2.Visible == true)
+            {
+                MessageBox.Show("Atr 2 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (n3.Text == "" && n3.Visible == true)
+            {
+                MessageBox.Show("Atr 3 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (n4.Text == "" && n4.Visible == true)
+            {
+                MessageBox.Show("Atr 4 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (n5.Text == "" && n5.Visible == true)
+            {
+                MessageBox.Show("Atr 5 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (n6.Text == "" && n6.Visible == true)
+            {
+                MessageBox.Show("Atr 6 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (n7.Text == "" && n7.Visible == true)
+            {
+                MessageBox.Show("Atr 7 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (n8.Text == "" && n8.Visible == true)
+            {
+                MessageBox.Show("Atr 8 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (n9.Text == "" && n9.Visible == true)
+            {
+                MessageBox.Show("Atr 9 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (n10.Text == "" && n10.Visible == true)
+            {
+                MessageBox.Show("Atr 10 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            curSesh.nameAtr1 = n1.Text;
+            curSesh.nameAtr2 = n2.Text;
+            curSesh.nameAtr3 = n3.Text;
+            curSesh.nameAtr4 = n4.Text;
+            curSesh.nameAtr5 = n5.Text;
+            curSesh.nameAtr6 = n6.Text;
+            curSesh.nameAtr7 = n7.Text;
+            curSesh.nameAtr8 = n8.Text;
+            curSesh.nameAtr9 = n9.Text;
+            curSesh.nameAtr10 = n10.Text;
+
+            curSesh.qtyAtr1 = ((NumericUpDown)q1).Value;
+            curSesh.qtyAtr2 = ((NumericUpDown)q2).Value;
+            curSesh.qtyAtr3 = ((NumericUpDown)q3).Value;
+            curSesh.qtyAtr4 = ((NumericUpDown)q4).Value;
+            curSesh.qtyAtr5 = ((NumericUpDown)q5).Value;
+            curSesh.qtyAtr6 = ((NumericUpDown)q6).Value;
+            curSesh.qtyAtr7 = ((NumericUpDown)q7).Value;
+            curSesh.qtyAtr8 = ((NumericUpDown)q8).Value;
+            curSesh.qtyAtr9 = ((NumericUpDown)q9).Value;
+            curSesh.qtyAtr10 = ((NumericUpDown)q10).Value;
+
+            curSesh.highestQty = curSesh.getHighest(Form.ActiveForm);
+
+            Control atrQty = this.Controls.Find("atrNum", true).Single();
+            curSesh.totalAtr = ((ComboBox)atrQty).SelectedIndex + 1;
+
+            Form2 inputValues = new Form2(this);
+            inputValues.curSeshF2 = curSesh;
+
+            int x = 0;
+            int y = 0;
+
+            switch (curSesh.highestQty)
+            {
+                case 0:
+                    x = 321;
+                    break;
+                case 1:
+                    x = 321;
+                    break;
+                case 2:
+                    x = 442;
+                    break;
+                case 3:
+                    x = 563;
+                    break;
+                case 4:
+                    x = 684;
+                    break;
+                case 5:
+                    x = 805;
+                    break;
+                case 6:
+                    x = 932;
+                    break;
+                case 7:
+                    x = 1053;
+                    break;
+                case 8:
+                    x = 1180;
+                    break;
+                case 9:
+                    x = 1300;
+                    break;
+                case 10:
+                    x = 1470;
+                    break;
+            }
+
+            switch (curSesh.totalAtr)
+            {
+                case 0:
+                    y = 210;
+                    break;
+                case 1:
+                    y = 210;
+                    break;
+                case 2:
+                    y = 300;
+                    break;
+                case 3:
+                    y = 390;
+                    break;
+                case 4:
+                    y = 475;
+                    break;
+                case 5:
+                    y = 560;
+                    break;
+                case 6:
+                    y = 650;
+                    break;
+                case 7:
+                    y = 740;
+                    break;
+                case 8:
+                    y = 830;
+                    break;
+                case 9:
+                    y = 920;
+                    break;
+                case 10:
+                    y = 1060;
+                    break;
+            }
+
+            inputValues.Size = new Size(x, y);
+            inputValues.Show();
         }
 
         private void atrNum_SelectedValueChanged(object sender, EventArgs e)
@@ -375,6 +557,52 @@ namespace easyNFT
                     break;
 
             }
+        }
+    }
+    public class userInput : Control
+    {
+        public decimal highestQty;
+        public int totalAtr;
+
+        public string nameAtr1;
+        public string nameAtr2;
+        public string nameAtr3;
+        public string nameAtr4;
+        public string nameAtr5;
+        public string nameAtr6;
+        public string nameAtr7;
+        public string nameAtr8;
+        public string nameAtr9;
+        public string nameAtr10;
+
+        public decimal qtyAtr1;
+        public decimal qtyAtr2;
+        public decimal qtyAtr3;
+        public decimal qtyAtr4;
+        public decimal qtyAtr5;
+        public decimal qtyAtr6;
+        public decimal qtyAtr7;
+        public decimal qtyAtr8;
+        public decimal qtyAtr9;
+        public decimal qtyAtr10;
+
+        public userInput() { }
+
+        public decimal getHighest(Form form)
+        {
+            Control atrQty = form.Controls.Find("atrNum", true).Single();
+
+            decimal curHighest = 0;
+
+            for (int i = 1; i <= ((ComboBox)atrQty).SelectedIndex + 1; i++){
+                Control tempCtrl = form.Controls.Find("qtyAtr" + i, true).Single();
+                if (((NumericUpDown)tempCtrl).Value > curHighest)
+                {
+                    curHighest = ((NumericUpDown)tempCtrl).Value;
+                }
+            }
+
+            return curHighest;
         }
     }
 }
