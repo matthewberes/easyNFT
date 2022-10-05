@@ -350,7 +350,8 @@ namespace easyNFT
             this.btnAtr1 = new System.Windows.Forms.Button();
             this.ttlAtr1 = new System.Windows.Forms.Label();
             this.submitButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.submitLbl = new System.Windows.Forms.Label();
+            this.submitAmount = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.lowIndex6Atr10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lowIndex6Atr8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lowIndex2Atr1)).BeginInit();
@@ -551,6 +552,7 @@ namespace easyNFT
             ((System.ComponentModel.ISupportInitialize)(this.highIndex2Atr1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.highIndex1Atr1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lowIndex1Atr1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.submitAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // lowIndex6Atr10
@@ -6565,7 +6567,7 @@ namespace easyNFT
             // 
             // submitButton
             // 
-            this.submitButton.Location = new System.Drawing.Point(118, 936);
+            this.submitButton.Location = new System.Drawing.Point(66, 934);
             this.submitButton.Name = "submitButton";
             this.submitButton.Size = new System.Drawing.Size(94, 29);
             this.submitButton.TabIndex = 758;
@@ -6573,21 +6575,34 @@ namespace easyNFT
             this.submitButton.UseVisualStyleBackColor = true;
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
             // 
-            // label1
+            // submitLbl
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(50, 29);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 20);
-            this.label1.TabIndex = 759;
-            this.label1.Text = "label1";
+            this.submitLbl.AutoSize = true;
+            this.submitLbl.Location = new System.Drawing.Point(166, 938);
+            this.submitLbl.Name = "submitLbl";
+            this.submitLbl.Size = new System.Drawing.Size(65, 20);
+            this.submitLbl.TabIndex = 759;
+            this.submitLbl.Text = "Amount:";
+            // 
+            // submitAmount
+            // 
+            this.submitAmount.Location = new System.Drawing.Point(229, 936);
+            this.submitAmount.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.submitAmount.Name = "submitAmount";
+            this.submitAmount.Size = new System.Drawing.Size(68, 27);
+            this.submitAmount.TabIndex = 760;
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1458, 1012);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.submitAmount);
+            this.Controls.Add(this.submitLbl);
             this.Controls.Add(this.submitButton);
             this.Controls.Add(this.lowIndex6Atr10);
             this.Controls.Add(this.lowIndex6Atr8);
@@ -7112,6 +7127,7 @@ namespace easyNFT
             ((System.ComponentModel.ISupportInitialize)(this.highIndex2Atr1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.highIndex1Atr1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lowIndex1Atr1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.submitAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -7441,6 +7457,7 @@ namespace easyNFT
         private System.Windows.Forms.Label ttlAtr1;
         private System.Windows.Forms.Button submitButton;
         private System.Windows.Forms.Button bmitB;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label submitLbl;
+        private System.Windows.Forms.NumericUpDown submitAmount;
     }
 }
