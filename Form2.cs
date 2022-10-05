@@ -398,10 +398,10 @@ namespace easyNFT
             Control controlName;
             string name;
 
-            public variableNames(string value)
+            public variableNames(Form curForm, string value)
             {
                 this.name = value;
-                this.controlName = this.Controls.Find(value, true)[0];
+                this.controlName = curForm.Controls.Find(this.name, true).Single();
             }
 
             public Control getControl()
@@ -412,53 +412,96 @@ namespace easyNFT
                 return this.controlName;
             }
         }
-        static void boundCheckAtr(int atrVal, int indexNum)
+        static void boundCheckAtr(Form curForm, int atrVal, int indexNum)
         {
+            Dictionary<string, int> names = new Dictionary<string, int>();
 
-            for (int i = 1; i < indexNum; i++)
+            for (int i = 1; i <= indexNum; i++)
             {
                 //currIndexLOW
-                string curLowString = String.Format("lowIndex" + i.ToString() + "Atr" + atrVal.ToString());
-                variableNames curLowClass = new variableNames(curLowString);
+                string curLowString = "lowIndex" + i.ToString() + "Atr" + atrVal.ToString();
+                variableNames curLowClass = new variableNames(curForm, curLowString);
                 Control curLowControl = curLowClass.getControl();
                 //currIndexHIGH
                 string curHighString = String.Format("highIndex" + i.ToString() + "Atr" + atrVal.ToString());
-                variableNames curHighClass = new variableNames(curHighString);
+                variableNames curHighClass = new variableNames(curForm, curHighString);
                 Control curHighControl = curHighClass.getControl();
+
                 //nextIndexLOW
-                string nextLowString = String.Format("lowIndex" + (i + 1).ToString() + "Atr" + atrVal.ToString());
-                variableNames nextLowClass = new variableNames(nextLowString);
-                Control nextLowControl = nextLowClass.getControl();
+                Control nextLowControl = new Control();
+                string nextLowString = "";
+                if (i < indexNum)
+                {
+                    nextLowString = String.Format("lowIndex" + (i + 1).ToString() + "Atr" + atrVal.ToString());
+                    variableNames nextLowClass = new variableNames(curForm, nextLowString);
+                    nextLowControl = nextLowClass.getControl();
+                }
                 //prevIndexHIGH
-                string prevHighString = String.Format("highIndex" + (i - 1).ToString() + "Atr" + atrVal.ToString());
-                variableNames prevHighClass = new variableNames(prevHighString);
-                Control prevHighControl = prevHighClass.getControl();
+                Control prevHighControl = new Control();
+                string prevHighString = "";
+                if (i > 1)
+                {
+                    prevHighString = String.Format("highIndex" + (i - 1).ToString() + "Atr" + atrVal.ToString());
+                    variableNames prevHighClass = new variableNames(curForm, prevHighString);
+                    prevHighControl = prevHighClass.getControl();
+                }
 
                 //if currIndexLOW > currIndexHIGH
-                if (((NumericUpDown)curLowControl).Value > ((NumericUpDown)curHighControl).Value)
+                if (((NumericUpDown)curLowControl).Value >= ((NumericUpDown)curHighControl).Value)
                 {
                     //Error
-                    MessageBox.Show(curLowString.ToString() + " is larger than " + curHighString.ToString(), "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(curLowString + " is larger than or equal to " + curHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
                 //if currIndexLOW < prevIndexHIGH
-                if (((NumericUpDown)curLowControl).Value < ((NumericUpDown)prevHighControl).Value)
+                if (i > 1)
                 {
-                    //Error
-                    MessageBox.Show(curLowString.ToString() + " is less than " + prevHighString.ToString(), "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (((NumericUpDown)curLowControl).Value <= ((NumericUpDown)prevHighControl).Value)
+                    {
+                        //Error
+                        MessageBox.Show(curLowString + " is less than or equal to " + prevHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
-
                 //if currentIndexHIGH > nextIndexLOW
-                if (((NumericUpDown)curHighControl).Value > ((NumericUpDown)nextLowControl).Value)
-                {
-                    //Error
-                    MessageBox.Show(curLowString.ToString() + " is larger than " + curHighString.ToString(), "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (i < indexNum)
+                    {
+                    decimal nextLowDec = Convert.ToDecimal(((NumericUpDown)nextLowControl).Value);
+                    decimal curHighDec = Convert.ToDecimal(((NumericUpDown)curHighControl).Value);
+                    if (curHighDec >= nextLowDec)
+                    {
+                        //Error
+                        MessageBox.Show(nextLowString + " is less than or equal to " + curHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
+                    
+                //check sum initialization
+                string tempVal = "val" + i.ToString();
+                names[tempVal] = (int)((NumericUpDown)curHighControl).Value - (int)((NumericUpDown)curLowControl).Value;
+            }
+            //check sum operation
+            int sum = 0;
+            foreach (KeyValuePair<string, int> entry in names)
+            {
+                sum += entry.Value;
+                if (sum > 1)
+                {
+                    MessageBox.Show("Atr " + atrVal.ToString() + "'s values summed are greater than 1", "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            if (sum < 1)
+            {
+                MessageBox.Show("Atr " + atrVal.ToString() + "'s values summed are less than 1", "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
 
         private void submitButton_Click(object sender, EventArgs e)
         {
+            Control totalAtr = this.mainForm.Controls.Find("atrNum", true).Single();
             Control maxFile1 = this.mainForm.Controls.Find("qtyAtr1", true).Single();
             Control maxFile2 = this.mainForm.Controls.Find("qtyAtr2", true).Single();
             Control maxFile3 = this.mainForm.Controls.Find("qtyAtr3", true).Single();
@@ -469,6 +512,19 @@ namespace easyNFT
             Control maxFile8 = this.mainForm.Controls.Find("qtyAtr8", true).Single();
             Control maxFile9 = this.mainForm.Controls.Find("qtyAtr9", true).Single();
             Control maxFile10 = this.mainForm.Controls.Find("qtyAtr10", true).Single();
+
+            Dictionary<string, Control> names = new Dictionary<string, Control>();
+
+            names["q1"] = this.mainForm.Controls.Find("qtyAtr1", true).Single();
+            names["q2"] = this.mainForm.Controls.Find("qtyAtr2", true).Single();
+            names["q3"] = this.mainForm.Controls.Find("qtyAtr3", true).Single();
+            names["q4"] = this.mainForm.Controls.Find("qtyAtr4", true).Single();
+            names["q5"] = this.mainForm.Controls.Find("qtyAtr5", true).Single();
+            names["q6"] = this.mainForm.Controls.Find("qtyAtr6", true).Single();
+            names["q7"] = this.mainForm.Controls.Find("qtyAtr7", true).Single();
+            names["q8"] = this.mainForm.Controls.Find("qtyAtr8", true).Single();
+            names["q9"] = this.mainForm.Controls.Find("qtyAtr9", true).Single();
+            names["q10"] = this.mainForm.Controls.Find("qtyAtr10", true).Single();
 
             if (btnAtr1.Visible == true && globalAtr1 < ((NumericUpDown)maxFile1).Value)
             {
@@ -520,7 +576,13 @@ namespace easyNFT
                 MessageBox.Show("Not enough files for atr10", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+            for (int i = 1; i <= ((ComboBox)totalAtr).SelectedIndex + 1; i++) 
+            {
+                string temp = "q" + i.ToString();
+                int test = (int)((NumericUpDown)names[temp]).Value;
+                boundCheckAtr(this, i, test);
+            }
+            //MessageBox.Show("SHIT WORKS CUH", "SUCCESS");
         }
     }
 }

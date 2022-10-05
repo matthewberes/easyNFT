@@ -350,6 +350,7 @@ namespace easyNFT
             this.btnAtr1 = new System.Windows.Forms.Button();
             this.ttlAtr1 = new System.Windows.Forms.Label();
             this.submitButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.lowIndex6Atr10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lowIndex6Atr8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lowIndex2Atr1)).BeginInit();
@@ -6572,11 +6573,21 @@ namespace easyNFT
             this.submitButton.UseVisualStyleBackColor = true;
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(50, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(50, 20);
+            this.label1.TabIndex = 759;
+            this.label1.Text = "label1";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1458, 1012);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.submitButton);
             this.Controls.Add(this.lowIndex6Atr10);
             this.Controls.Add(this.lowIndex6Atr8);
@@ -7430,5 +7441,6 @@ namespace easyNFT
         private System.Windows.Forms.Label ttlAtr1;
         private System.Windows.Forms.Button submitButton;
         private System.Windows.Forms.Button bmitB;
+        private System.Windows.Forms.Label label1;
     }
 }
