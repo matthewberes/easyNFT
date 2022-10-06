@@ -14,3 +14,4 @@ C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.dll
 C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.pdb
 C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.genruntimeconfig.cache
 C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.Form2.resources
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.Form3.resources

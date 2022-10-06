@@ -28,6 +28,18 @@ namespace easyNFT
         public int globalAtr8;
         public int globalAtr9;
         public int globalAtr10;
+
+        public OpenFileDialog filesAtr1 = new OpenFileDialog();
+        public OpenFileDialog filesAtr2 = new OpenFileDialog();
+        public OpenFileDialog filesAtr3 = new OpenFileDialog();
+        public OpenFileDialog filesAtr4 = new OpenFileDialog();
+        public OpenFileDialog filesAtr5 = new OpenFileDialog();
+        public OpenFileDialog filesAtr6 = new OpenFileDialog();
+        public OpenFileDialog filesAtr7 = new OpenFileDialog();
+        public OpenFileDialog filesAtr8 = new OpenFileDialog();
+        public OpenFileDialog filesAtr9 = new OpenFileDialog();
+        public OpenFileDialog filesAtr10 = new OpenFileDialog();
+
         public userInput curSeshF2 { get; set; }
         public Form2(Form curForm)
         {
@@ -169,6 +181,7 @@ namespace easyNFT
                     return;
                 }
                 globalAtr1 = dialog.FileNames.Length;
+                filesAtr1 = dialog;
 
                 int i = 1;
                 foreach (String file in dialog.FileNames)
@@ -194,6 +207,7 @@ namespace easyNFT
                     return;
                 }
                 globalAtr2 = dialog.FileNames.Length;
+                filesAtr2 = dialog;
 
                 int i = 1;
                 foreach (String file in dialog.FileNames)
@@ -219,6 +233,7 @@ namespace easyNFT
                     return;
                 }
                 globalAtr3 = dialog.FileNames.Length;
+                filesAtr3 = dialog;
 
                 int i = 1;
                 foreach (String file in dialog.FileNames)
@@ -244,6 +259,7 @@ namespace easyNFT
                     return;
                 }
                 globalAtr4 = dialog.FileNames.Length;
+                filesAtr4 = dialog;
 
                 int i = 1;
                 foreach (String file in dialog.FileNames)
@@ -269,6 +285,7 @@ namespace easyNFT
                     return;
                 }
                 globalAtr5 = dialog.FileNames.Length;
+                filesAtr5 = dialog;
 
                 int i = 1;
                 foreach (String file in dialog.FileNames)
@@ -294,6 +311,7 @@ namespace easyNFT
                     return;
                 }
                 globalAtr6 = dialog.FileNames.Length;
+                filesAtr6 = dialog;
 
                 int i = 1;
                 foreach (String file in dialog.FileNames)
@@ -319,6 +337,7 @@ namespace easyNFT
                     return;
                 }
                 globalAtr7 = dialog.FileNames.Length;
+                filesAtr7 = dialog;
 
                 int i = 1;
                 foreach (String file in dialog.FileNames)
@@ -344,6 +363,7 @@ namespace easyNFT
                     return;
                 }
                 globalAtr8 = dialog.FileNames.Length;
+                filesAtr8 = dialog;
 
                 int i = 1;
                 foreach (String file in dialog.FileNames)
@@ -369,6 +389,7 @@ namespace easyNFT
                     return;
                 }
                 globalAtr9 = dialog.FileNames.Length;
+                filesAtr9 = dialog;
 
                 int i = 1;
                 foreach (String file in dialog.FileNames)
@@ -394,6 +415,7 @@ namespace easyNFT
                     return;
                 }
                 globalAtr10 = dialog.FileNames.Length;
+                filesAtr10 = dialog;
 
                 int i = 1;
                 foreach (String file in dialog.FileNames)
@@ -426,7 +448,7 @@ namespace easyNFT
             }
         }
         //check for gaps
-        static void boundCheckAtr(Form curForm, int atrVal, int indexNum)
+        static int boundCheckAtr(Form curForm, int atrVal, int indexNum)
         {
             Dictionary<string, int> names = new Dictionary<string, int>();
 
@@ -465,7 +487,7 @@ namespace easyNFT
                 {
                     //Error
                     MessageBox.Show(curLowString + " is larger than or equal to " + curHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return 1;
                 }
 
                 //if currIndexLOW < prevIndexHIGH
@@ -475,7 +497,7 @@ namespace easyNFT
                     {
                         //Error
                         MessageBox.Show(curLowString + " is less than or equal to " + prevHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        return 1;
                     }
                 }
                 //if currentIndexHIGH > nextIndexLOW
@@ -487,7 +509,7 @@ namespace easyNFT
                     {
                         //Error
                         MessageBox.Show(nextLowString + " is less than or equal to " + curHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        return 1;
                     }
                 }
 
@@ -503,19 +525,38 @@ namespace easyNFT
                 if (sum > 1)
                 {
                     MessageBox.Show("Atr " + atrVal.ToString() + "'s values summed are greater than 1", "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return 1;
                 }
             }
             if (sum < 1)
             {
                 MessageBox.Show("Atr " + atrVal.ToString() + "'s values summed are less than 1", "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return 1;
+            }
+            return 0;
+        }
+
+        public int getAmount()
+        {
+            Control submitAmount = this.Controls.Find("submitAmount", true).Single();
+            decimal total = ((NumericUpDown)submitAmount).Value;
+            if (total > 0)
+            {
+                return 0;
+            }
+            else
+            {
+                //error
+                MessageBox.Show("No amount given", "Empty Field", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 1;
             }
         }
 
         private void submitButton_Click(object sender, EventArgs e)
         {
             Control totalAtr = this.mainForm.Controls.Find("atrNum", true).Single();
+            int errorBC = 0;
+            int errorGA = 0;
 
 
             Dictionary<string, Control> names = new Dictionary<string, Control>();
@@ -818,267 +859,297 @@ namespace easyNFT
             {
                 string temp = "q" + i.ToString();
                 int test = (int)((NumericUpDown)names[temp]).Value;
-                boundCheckAtr(this, i, test);
+                if(errorBC == 0)
+                {
+                    errorBC = boundCheckAtr(this, i, test);
+                }
             }
+            errorGA = getAmount();
+            if (errorBC != 1 && errorGA != 1)
+            {       
+                List<brs> boundReadyState = new List<brs>();
+                boundReadyState.Add(new brs(this)
+                {
 
-            List<brs> boundReadyState = new List<brs>();
-            boundReadyState.Add(new brs() { 
-                n1 = ((TextBox)names["n1"]).Text,
-                n2 = ((TextBox)names["n2"]).Text,
-                n3 = ((TextBox)names["n3"]).Text,
-                n4 = ((TextBox)names["n4"]).Text,
-                n5 = ((TextBox)names["n5"]).Text,
-                n6 = ((TextBox)names["n6"]).Text,
-                n7 = ((TextBox)names["n7"]).Text,
-                n8 = ((TextBox)names["n8"]).Text,
-                n9 = ((TextBox)names["n9"]).Text,
-                n10 = ((TextBox)names["n10"]).Text,
+                    dialogAtr1 = filesAtr1.FileNames,
+                    dialogAtr2 = filesAtr2.FileNames,
+                    dialogAtr3 = filesAtr3.FileNames,
+                    dialogAtr4 = filesAtr4.FileNames,
+                    dialogAtr5 = filesAtr5.FileNames,
+                    dialogAtr6 = filesAtr6.FileNames,
+                    dialogAtr7 = filesAtr7.FileNames,
+                    dialogAtr8 = filesAtr8.FileNames,
+                    dialogAtr9 = filesAtr9.FileNames,
+                    dialogAtr10 = filesAtr10.FileNames,
 
-                q1 = ((NumericUpDown)names["q1"]).Value,
-                q2 = ((NumericUpDown)names["q2"]).Value,
-                q3 = ((NumericUpDown)names["q3"]).Value,
-                q4 = ((NumericUpDown)names["q4"]).Value,
-                q5 = ((NumericUpDown)names["q5"]).Value,
-                q6 = ((NumericUpDown)names["q6"]).Value,
-                q7 = ((NumericUpDown)names["q7"]).Value,
-                q8 = ((NumericUpDown)names["q8"]).Value,
-                q9 = ((NumericUpDown)names["q9"]).Value,
-                q10 = ((NumericUpDown)names["q10"]).Value,
+                    n1 = ((TextBox)names["n1"]).Text,
+                    n2 = ((TextBox)names["n2"]).Text,
+                    n3 = ((TextBox)names["n3"]).Text,
+                    n4 = ((TextBox)names["n4"]).Text,
+                    n5 = ((TextBox)names["n5"]).Text,
+                    n6 = ((TextBox)names["n6"]).Text,
+                    n7 = ((TextBox)names["n7"]).Text,
+                    n8 = ((TextBox)names["n8"]).Text,
+                    n9 = ((TextBox)names["n9"]).Text,
+                    n10 = ((TextBox)names["n10"]).Text,
 
-                //lows
-                lowIndex1Atr1 = ((NumericUpDown)names["lowIndex1Atr1"]).Value,
-                lowIndex2Atr1 = ((NumericUpDown)names["lowIndex2Atr1"]).Value,
-                lowIndex3Atr1 = ((NumericUpDown)names["lowIndex3Atr1"]).Value,
-                lowIndex4Atr1 = ((NumericUpDown)names["lowIndex4Atr1"]).Value,
-                lowIndex5Atr1 = ((NumericUpDown)names["lowIndex5Atr1"]).Value,
-                lowIndex6Atr1 = ((NumericUpDown)names["lowIndex6Atr1"]).Value,
-                lowIndex7Atr1 = ((NumericUpDown)names["lowIndex7Atr1"]).Value,
-                lowIndex8Atr1 = ((NumericUpDown)names["lowIndex8Atr1"]).Value,
-                lowIndex9Atr1 = ((NumericUpDown)names["lowIndex9Atr1"]).Value,
-                lowIndex10Atr1 = ((NumericUpDown)names["lowIndex10Atr1"]).Value,
+                    q1 = ((NumericUpDown)names["q1"]).Value,
+                    q2 = ((NumericUpDown)names["q2"]).Value,
+                    q3 = ((NumericUpDown)names["q3"]).Value,
+                    q4 = ((NumericUpDown)names["q4"]).Value,
+                    q5 = ((NumericUpDown)names["q5"]).Value,
+                    q6 = ((NumericUpDown)names["q6"]).Value,
+                    q7 = ((NumericUpDown)names["q7"]).Value,
+                    q8 = ((NumericUpDown)names["q8"]).Value,
+                    q9 = ((NumericUpDown)names["q9"]).Value,
+                    q10 = ((NumericUpDown)names["q10"]).Value,
 
-                lowIndex1Atr2 = ((NumericUpDown)names["lowIndex1Atr2"]).Value,
-                lowIndex2Atr2 = ((NumericUpDown)names["lowIndex2Atr2"]).Value,
-                lowIndex3Atr2 = ((NumericUpDown)names["lowIndex3Atr2"]).Value,
-                lowIndex4Atr2 = ((NumericUpDown)names["lowIndex4Atr2"]).Value,
-                lowIndex5Atr2 = ((NumericUpDown)names["lowIndex5Atr2"]).Value,
-                lowIndex6Atr2 = ((NumericUpDown)names["lowIndex6Atr2"]).Value,
-                lowIndex7Atr2 = ((NumericUpDown)names["lowIndex7Atr2"]).Value,
-                lowIndex8Atr2 = ((NumericUpDown)names["lowIndex8Atr2"]).Value,
-                lowIndex9Atr2 = ((NumericUpDown)names["lowIndex9Atr2"]).Value,
-                lowIndex10Atr2 = ((NumericUpDown)names["lowIndex10Atr2"]).Value,
+                    //lows
+                    lowIndex1Atr1 = ((NumericUpDown)names["lowIndex1Atr1"]).Value,
+                    lowIndex2Atr1 = ((NumericUpDown)names["lowIndex2Atr1"]).Value,
+                    lowIndex3Atr1 = ((NumericUpDown)names["lowIndex3Atr1"]).Value,
+                    lowIndex4Atr1 = ((NumericUpDown)names["lowIndex4Atr1"]).Value,
+                    lowIndex5Atr1 = ((NumericUpDown)names["lowIndex5Atr1"]).Value,
+                    lowIndex6Atr1 = ((NumericUpDown)names["lowIndex6Atr1"]).Value,
+                    lowIndex7Atr1 = ((NumericUpDown)names["lowIndex7Atr1"]).Value,
+                    lowIndex8Atr1 = ((NumericUpDown)names["lowIndex8Atr1"]).Value,
+                    lowIndex9Atr1 = ((NumericUpDown)names["lowIndex9Atr1"]).Value,
+                    lowIndex10Atr1 = ((NumericUpDown)names["lowIndex10Atr1"]).Value,
 
-                lowIndex1Atr3 = ((NumericUpDown)names["lowIndex1Atr3"]).Value,
-                lowIndex2Atr3 = ((NumericUpDown)names["lowIndex2Atr3"]).Value,
-                lowIndex3Atr3 = ((NumericUpDown)names["lowIndex3Atr3"]).Value,
-                lowIndex4Atr3 = ((NumericUpDown)names["lowIndex4Atr3"]).Value,
-                lowIndex5Atr3 = ((NumericUpDown)names["lowIndex5Atr3"]).Value,
-                lowIndex6Atr3 = ((NumericUpDown)names["lowIndex6Atr3"]).Value,
-                lowIndex7Atr3 = ((NumericUpDown)names["lowIndex7Atr3"]).Value,
-                lowIndex8Atr3 = ((NumericUpDown)names["lowIndex8Atr3"]).Value,
-                lowIndex9Atr3 = ((NumericUpDown)names["lowIndex9Atr3"]).Value,
-                lowIndex10Atr3 = ((NumericUpDown)names["lowIndex10Atr3"]).Value,
+                    lowIndex1Atr2 = ((NumericUpDown)names["lowIndex1Atr2"]).Value,
+                    lowIndex2Atr2 = ((NumericUpDown)names["lowIndex2Atr2"]).Value,
+                    lowIndex3Atr2 = ((NumericUpDown)names["lowIndex3Atr2"]).Value,
+                    lowIndex4Atr2 = ((NumericUpDown)names["lowIndex4Atr2"]).Value,
+                    lowIndex5Atr2 = ((NumericUpDown)names["lowIndex5Atr2"]).Value,
+                    lowIndex6Atr2 = ((NumericUpDown)names["lowIndex6Atr2"]).Value,
+                    lowIndex7Atr2 = ((NumericUpDown)names["lowIndex7Atr2"]).Value,
+                    lowIndex8Atr2 = ((NumericUpDown)names["lowIndex8Atr2"]).Value,
+                    lowIndex9Atr2 = ((NumericUpDown)names["lowIndex9Atr2"]).Value,
+                    lowIndex10Atr2 = ((NumericUpDown)names["lowIndex10Atr2"]).Value,
 
-                lowIndex1Atr4 = ((NumericUpDown)names["lowIndex1Atr4"]).Value,
-                lowIndex2Atr4 = ((NumericUpDown)names["lowIndex2Atr4"]).Value,
-                lowIndex3Atr4 = ((NumericUpDown)names["lowIndex3Atr4"]).Value,
-                lowIndex4Atr4 = ((NumericUpDown)names["lowIndex4Atr4"]).Value,
-                lowIndex5Atr4 = ((NumericUpDown)names["lowIndex5Atr4"]).Value,
-                lowIndex6Atr4 = ((NumericUpDown)names["lowIndex6Atr4"]).Value,
-                lowIndex7Atr4 = ((NumericUpDown)names["lowIndex7Atr4"]).Value,
-                lowIndex8Atr4 = ((NumericUpDown)names["lowIndex8Atr4"]).Value,
-                lowIndex9Atr4 = ((NumericUpDown)names["lowIndex9Atr4"]).Value,
-                lowIndex10Atr4 = ((NumericUpDown)names["lowIndex10Atr4"]).Value,
+                    lowIndex1Atr3 = ((NumericUpDown)names["lowIndex1Atr3"]).Value,
+                    lowIndex2Atr3 = ((NumericUpDown)names["lowIndex2Atr3"]).Value,
+                    lowIndex3Atr3 = ((NumericUpDown)names["lowIndex3Atr3"]).Value,
+                    lowIndex4Atr3 = ((NumericUpDown)names["lowIndex4Atr3"]).Value,
+                    lowIndex5Atr3 = ((NumericUpDown)names["lowIndex5Atr3"]).Value,
+                    lowIndex6Atr3 = ((NumericUpDown)names["lowIndex6Atr3"]).Value,
+                    lowIndex7Atr3 = ((NumericUpDown)names["lowIndex7Atr3"]).Value,
+                    lowIndex8Atr3 = ((NumericUpDown)names["lowIndex8Atr3"]).Value,
+                    lowIndex9Atr3 = ((NumericUpDown)names["lowIndex9Atr3"]).Value,
+                    lowIndex10Atr3 = ((NumericUpDown)names["lowIndex10Atr3"]).Value,
 
-                lowIndex1Atr5 = ((NumericUpDown)names["lowIndex1Atr5"]).Value,
-                lowIndex2Atr5 = ((NumericUpDown)names["lowIndex2Atr5"]).Value,
-                lowIndex3Atr5 = ((NumericUpDown)names["lowIndex3Atr5"]).Value,
-                lowIndex4Atr5 = ((NumericUpDown)names["lowIndex4Atr5"]).Value,
-                lowIndex5Atr5 = ((NumericUpDown)names["lowIndex5Atr5"]).Value,
-                lowIndex6Atr5 = ((NumericUpDown)names["lowIndex6Atr5"]).Value,
-                lowIndex7Atr5 = ((NumericUpDown)names["lowIndex7Atr5"]).Value,
-                lowIndex8Atr5 = ((NumericUpDown)names["lowIndex8Atr5"]).Value,
-                lowIndex9Atr5 = ((NumericUpDown)names["lowIndex9Atr5"]).Value,
-                lowIndex10Atr5 = ((NumericUpDown)names["lowIndex10Atr5"]).Value,
+                    lowIndex1Atr4 = ((NumericUpDown)names["lowIndex1Atr4"]).Value,
+                    lowIndex2Atr4 = ((NumericUpDown)names["lowIndex2Atr4"]).Value,
+                    lowIndex3Atr4 = ((NumericUpDown)names["lowIndex3Atr4"]).Value,
+                    lowIndex4Atr4 = ((NumericUpDown)names["lowIndex4Atr4"]).Value,
+                    lowIndex5Atr4 = ((NumericUpDown)names["lowIndex5Atr4"]).Value,
+                    lowIndex6Atr4 = ((NumericUpDown)names["lowIndex6Atr4"]).Value,
+                    lowIndex7Atr4 = ((NumericUpDown)names["lowIndex7Atr4"]).Value,
+                    lowIndex8Atr4 = ((NumericUpDown)names["lowIndex8Atr4"]).Value,
+                    lowIndex9Atr4 = ((NumericUpDown)names["lowIndex9Atr4"]).Value,
+                    lowIndex10Atr4 = ((NumericUpDown)names["lowIndex10Atr4"]).Value,
 
-                lowIndex1Atr6 = ((NumericUpDown)names["lowIndex1Atr6"]).Value,
-                lowIndex2Atr6 = ((NumericUpDown)names["lowIndex2Atr6"]).Value,
-                lowIndex3Atr6 = ((NumericUpDown)names["lowIndex3Atr6"]).Value,
-                lowIndex4Atr6 = ((NumericUpDown)names["lowIndex4Atr6"]).Value,
-                lowIndex5Atr6 = ((NumericUpDown)names["lowIndex5Atr6"]).Value,
-                lowIndex6Atr6 = ((NumericUpDown)names["lowIndex6Atr6"]).Value,
-                lowIndex7Atr6 = ((NumericUpDown)names["lowIndex7Atr6"]).Value,
-                lowIndex8Atr6 = ((NumericUpDown)names["lowIndex8Atr6"]).Value,
-                lowIndex9Atr6 = ((NumericUpDown)names["lowIndex9Atr6"]).Value,
-                lowIndex10Atr6 = ((NumericUpDown)names["lowIndex10Atr6"]).Value,
+                    lowIndex1Atr5 = ((NumericUpDown)names["lowIndex1Atr5"]).Value,
+                    lowIndex2Atr5 = ((NumericUpDown)names["lowIndex2Atr5"]).Value,
+                    lowIndex3Atr5 = ((NumericUpDown)names["lowIndex3Atr5"]).Value,
+                    lowIndex4Atr5 = ((NumericUpDown)names["lowIndex4Atr5"]).Value,
+                    lowIndex5Atr5 = ((NumericUpDown)names["lowIndex5Atr5"]).Value,
+                    lowIndex6Atr5 = ((NumericUpDown)names["lowIndex6Atr5"]).Value,
+                    lowIndex7Atr5 = ((NumericUpDown)names["lowIndex7Atr5"]).Value,
+                    lowIndex8Atr5 = ((NumericUpDown)names["lowIndex8Atr5"]).Value,
+                    lowIndex9Atr5 = ((NumericUpDown)names["lowIndex9Atr5"]).Value,
+                    lowIndex10Atr5 = ((NumericUpDown)names["lowIndex10Atr5"]).Value,
 
-                lowIndex1Atr7 = ((NumericUpDown)names["lowIndex1Atr7"]).Value,
-                lowIndex2Atr7 = ((NumericUpDown)names["lowIndex2Atr7"]).Value,
-                lowIndex3Atr7 = ((NumericUpDown)names["lowIndex3Atr7"]).Value,
-                lowIndex4Atr7 = ((NumericUpDown)names["lowIndex4Atr7"]).Value,
-                lowIndex5Atr7 = ((NumericUpDown)names["lowIndex5Atr7"]).Value,
-                lowIndex6Atr7 = ((NumericUpDown)names["lowIndex6Atr7"]).Value,
-                lowIndex7Atr7 = ((NumericUpDown)names["lowIndex7Atr7"]).Value,
-                lowIndex8Atr7 = ((NumericUpDown)names["lowIndex8Atr7"]).Value,
-                lowIndex9Atr7 = ((NumericUpDown)names["lowIndex9Atr7"]).Value,
-                lowIndex10Atr7 = ((NumericUpDown)names["lowIndex10Atr7"]).Value,
+                    lowIndex1Atr6 = ((NumericUpDown)names["lowIndex1Atr6"]).Value,
+                    lowIndex2Atr6 = ((NumericUpDown)names["lowIndex2Atr6"]).Value,
+                    lowIndex3Atr6 = ((NumericUpDown)names["lowIndex3Atr6"]).Value,
+                    lowIndex4Atr6 = ((NumericUpDown)names["lowIndex4Atr6"]).Value,
+                    lowIndex5Atr6 = ((NumericUpDown)names["lowIndex5Atr6"]).Value,
+                    lowIndex6Atr6 = ((NumericUpDown)names["lowIndex6Atr6"]).Value,
+                    lowIndex7Atr6 = ((NumericUpDown)names["lowIndex7Atr6"]).Value,
+                    lowIndex8Atr6 = ((NumericUpDown)names["lowIndex8Atr6"]).Value,
+                    lowIndex9Atr6 = ((NumericUpDown)names["lowIndex9Atr6"]).Value,
+                    lowIndex10Atr6 = ((NumericUpDown)names["lowIndex10Atr6"]).Value,
 
-                lowIndex1Atr8 = ((NumericUpDown)names["lowIndex1Atr8"]).Value,
-                lowIndex2Atr8 = ((NumericUpDown)names["lowIndex2Atr8"]).Value,
-                lowIndex3Atr8 = ((NumericUpDown)names["lowIndex3Atr8"]).Value,
-                lowIndex4Atr8 = ((NumericUpDown)names["lowIndex4Atr8"]).Value,
-                lowIndex5Atr8 = ((NumericUpDown)names["lowIndex5Atr8"]).Value,
-                lowIndex6Atr8 = ((NumericUpDown)names["lowIndex6Atr8"]).Value,
-                lowIndex7Atr8 = ((NumericUpDown)names["lowIndex7Atr8"]).Value,
-                lowIndex8Atr8 = ((NumericUpDown)names["lowIndex8Atr8"]).Value,
-                lowIndex9Atr8 = ((NumericUpDown)names["lowIndex9Atr8"]).Value,
-                lowIndex10Atr8 = ((NumericUpDown)names["lowIndex10Atr8"]).Value,
+                    lowIndex1Atr7 = ((NumericUpDown)names["lowIndex1Atr7"]).Value,
+                    lowIndex2Atr7 = ((NumericUpDown)names["lowIndex2Atr7"]).Value,
+                    lowIndex3Atr7 = ((NumericUpDown)names["lowIndex3Atr7"]).Value,
+                    lowIndex4Atr7 = ((NumericUpDown)names["lowIndex4Atr7"]).Value,
+                    lowIndex5Atr7 = ((NumericUpDown)names["lowIndex5Atr7"]).Value,
+                    lowIndex6Atr7 = ((NumericUpDown)names["lowIndex6Atr7"]).Value,
+                    lowIndex7Atr7 = ((NumericUpDown)names["lowIndex7Atr7"]).Value,
+                    lowIndex8Atr7 = ((NumericUpDown)names["lowIndex8Atr7"]).Value,
+                    lowIndex9Atr7 = ((NumericUpDown)names["lowIndex9Atr7"]).Value,
+                    lowIndex10Atr7 = ((NumericUpDown)names["lowIndex10Atr7"]).Value,
 
-                lowIndex1Atr9 = ((NumericUpDown)names["lowIndex1Atr9"]).Value,
-                lowIndex2Atr9 = ((NumericUpDown)names["lowIndex2Atr9"]).Value,
-                lowIndex3Atr9 = ((NumericUpDown)names["lowIndex3Atr9"]).Value,
-                lowIndex4Atr9 = ((NumericUpDown)names["lowIndex4Atr9"]).Value,
-                lowIndex5Atr9 = ((NumericUpDown)names["lowIndex5Atr9"]).Value,
-                lowIndex6Atr9 = ((NumericUpDown)names["lowIndex6Atr9"]).Value,
-                lowIndex7Atr9 = ((NumericUpDown)names["lowIndex7Atr9"]).Value,
-                lowIndex8Atr9 = ((NumericUpDown)names["lowIndex8Atr9"]).Value,
-                lowIndex9Atr9 = ((NumericUpDown)names["lowIndex9Atr9"]).Value,
-                lowIndex10Atr9 = ((NumericUpDown)names["lowIndex10Atr9"]).Value,
+                    lowIndex1Atr8 = ((NumericUpDown)names["lowIndex1Atr8"]).Value,
+                    lowIndex2Atr8 = ((NumericUpDown)names["lowIndex2Atr8"]).Value,
+                    lowIndex3Atr8 = ((NumericUpDown)names["lowIndex3Atr8"]).Value,
+                    lowIndex4Atr8 = ((NumericUpDown)names["lowIndex4Atr8"]).Value,
+                    lowIndex5Atr8 = ((NumericUpDown)names["lowIndex5Atr8"]).Value,
+                    lowIndex6Atr8 = ((NumericUpDown)names["lowIndex6Atr8"]).Value,
+                    lowIndex7Atr8 = ((NumericUpDown)names["lowIndex7Atr8"]).Value,
+                    lowIndex8Atr8 = ((NumericUpDown)names["lowIndex8Atr8"]).Value,
+                    lowIndex9Atr8 = ((NumericUpDown)names["lowIndex9Atr8"]).Value,
+                    lowIndex10Atr8 = ((NumericUpDown)names["lowIndex10Atr8"]).Value,
 
-                lowIndex1Atr10 = ((NumericUpDown)names["lowIndex1Atr10"]).Value,
-                lowIndex2Atr10 = ((NumericUpDown)names["lowIndex2Atr10"]).Value,
-                lowIndex3Atr10 = ((NumericUpDown)names["lowIndex3Atr10"]).Value,
-                lowIndex4Atr10 = ((NumericUpDown)names["lowIndex4Atr10"]).Value,
-                lowIndex5Atr10 = ((NumericUpDown)names["lowIndex5Atr10"]).Value,
-                lowIndex6Atr10 = ((NumericUpDown)names["lowIndex6Atr10"]).Value,
-                lowIndex7Atr10 = ((NumericUpDown)names["lowIndex7Atr10"]).Value,
-                lowIndex8Atr10 = ((NumericUpDown)names["lowIndex8Atr10"]).Value,
-                lowIndex9Atr10 = ((NumericUpDown)names["lowIndex9Atr10"]).Value,
-                lowIndex10Atr10 = ((NumericUpDown)names["lowIndex10Atr10"]).Value,
+                    lowIndex1Atr9 = ((NumericUpDown)names["lowIndex1Atr9"]).Value,
+                    lowIndex2Atr9 = ((NumericUpDown)names["lowIndex2Atr9"]).Value,
+                    lowIndex3Atr9 = ((NumericUpDown)names["lowIndex3Atr9"]).Value,
+                    lowIndex4Atr9 = ((NumericUpDown)names["lowIndex4Atr9"]).Value,
+                    lowIndex5Atr9 = ((NumericUpDown)names["lowIndex5Atr9"]).Value,
+                    lowIndex6Atr9 = ((NumericUpDown)names["lowIndex6Atr9"]).Value,
+                    lowIndex7Atr9 = ((NumericUpDown)names["lowIndex7Atr9"]).Value,
+                    lowIndex8Atr9 = ((NumericUpDown)names["lowIndex8Atr9"]).Value,
+                    lowIndex9Atr9 = ((NumericUpDown)names["lowIndex9Atr9"]).Value,
+                    lowIndex10Atr9 = ((NumericUpDown)names["lowIndex10Atr9"]).Value,
 
-                //highs
-                highIndex1Atr1 = ((NumericUpDown)names["highIndex1Atr1"]).Value,
-                highIndex2Atr1 = ((NumericUpDown)names["highIndex2Atr1"]).Value,
-                highIndex3Atr1 = ((NumericUpDown)names["highIndex3Atr1"]).Value,
-                highIndex4Atr1 = ((NumericUpDown)names["highIndex4Atr1"]).Value,
-                highIndex5Atr1 = ((NumericUpDown)names["highIndex5Atr1"]).Value,
-                highIndex6Atr1 = ((NumericUpDown)names["highIndex6Atr1"]).Value,
-                highIndex7Atr1 = ((NumericUpDown)names["highIndex7Atr1"]).Value,
-                highIndex8Atr1 = ((NumericUpDown)names["highIndex8Atr1"]).Value,
-                highIndex9Atr1 = ((NumericUpDown)names["highIndex9Atr1"]).Value,
-                highIndex10Atr1 = ((NumericUpDown)names["highIndex10Atr1"]).Value,
+                    lowIndex1Atr10 = ((NumericUpDown)names["lowIndex1Atr10"]).Value,
+                    lowIndex2Atr10 = ((NumericUpDown)names["lowIndex2Atr10"]).Value,
+                    lowIndex3Atr10 = ((NumericUpDown)names["lowIndex3Atr10"]).Value,
+                    lowIndex4Atr10 = ((NumericUpDown)names["lowIndex4Atr10"]).Value,
+                    lowIndex5Atr10 = ((NumericUpDown)names["lowIndex5Atr10"]).Value,
+                    lowIndex6Atr10 = ((NumericUpDown)names["lowIndex6Atr10"]).Value,
+                    lowIndex7Atr10 = ((NumericUpDown)names["lowIndex7Atr10"]).Value,
+                    lowIndex8Atr10 = ((NumericUpDown)names["lowIndex8Atr10"]).Value,
+                    lowIndex9Atr10 = ((NumericUpDown)names["lowIndex9Atr10"]).Value,
+                    lowIndex10Atr10 = ((NumericUpDown)names["lowIndex10Atr10"]).Value,
 
-                highIndex1Atr2 = ((NumericUpDown)names["highIndex1Atr2"]).Value,
-                highIndex2Atr2 = ((NumericUpDown)names["highIndex2Atr2"]).Value,
-                highIndex3Atr2 = ((NumericUpDown)names["highIndex3Atr2"]).Value,
-                highIndex4Atr2 = ((NumericUpDown)names["highIndex4Atr2"]).Value,
-                highIndex5Atr2 = ((NumericUpDown)names["highIndex5Atr2"]).Value,
-                highIndex6Atr2 = ((NumericUpDown)names["highIndex6Atr2"]).Value,
-                highIndex7Atr2 = ((NumericUpDown)names["highIndex7Atr2"]).Value,
-                highIndex8Atr2 = ((NumericUpDown)names["highIndex8Atr2"]).Value,
-                highIndex9Atr2 = ((NumericUpDown)names["highIndex9Atr2"]).Value,
-                highIndex10Atr2 = ((NumericUpDown)names["highIndex10Atr2"]).Value,
+                    //highs
+                    highIndex1Atr1 = ((NumericUpDown)names["highIndex1Atr1"]).Value,
+                    highIndex2Atr1 = ((NumericUpDown)names["highIndex2Atr1"]).Value,
+                    highIndex3Atr1 = ((NumericUpDown)names["highIndex3Atr1"]).Value,
+                    highIndex4Atr1 = ((NumericUpDown)names["highIndex4Atr1"]).Value,
+                    highIndex5Atr1 = ((NumericUpDown)names["highIndex5Atr1"]).Value,
+                    highIndex6Atr1 = ((NumericUpDown)names["highIndex6Atr1"]).Value,
+                    highIndex7Atr1 = ((NumericUpDown)names["highIndex7Atr1"]).Value,
+                    highIndex8Atr1 = ((NumericUpDown)names["highIndex8Atr1"]).Value,
+                    highIndex9Atr1 = ((NumericUpDown)names["highIndex9Atr1"]).Value,
+                    highIndex10Atr1 = ((NumericUpDown)names["highIndex10Atr1"]).Value,
 
-                highIndex1Atr3 = ((NumericUpDown)names["highIndex1Atr3"]).Value,
-                highIndex2Atr3 = ((NumericUpDown)names["highIndex2Atr3"]).Value,
-                highIndex3Atr3 = ((NumericUpDown)names["highIndex3Atr3"]).Value,
-                highIndex4Atr3 = ((NumericUpDown)names["highIndex4Atr3"]).Value,
-                highIndex5Atr3 = ((NumericUpDown)names["highIndex5Atr3"]).Value,
-                highIndex6Atr3 = ((NumericUpDown)names["highIndex6Atr3"]).Value,
-                highIndex7Atr3 = ((NumericUpDown)names["highIndex7Atr3"]).Value,
-                highIndex8Atr3 = ((NumericUpDown)names["highIndex8Atr3"]).Value,
-                highIndex9Atr3 = ((NumericUpDown)names["highIndex9Atr3"]).Value,
-                highIndex10Atr3 = ((NumericUpDown)names["highIndex10Atr3"]).Value,
+                    highIndex1Atr2 = ((NumericUpDown)names["highIndex1Atr2"]).Value,
+                    highIndex2Atr2 = ((NumericUpDown)names["highIndex2Atr2"]).Value,
+                    highIndex3Atr2 = ((NumericUpDown)names["highIndex3Atr2"]).Value,
+                    highIndex4Atr2 = ((NumericUpDown)names["highIndex4Atr2"]).Value,
+                    highIndex5Atr2 = ((NumericUpDown)names["highIndex5Atr2"]).Value,
+                    highIndex6Atr2 = ((NumericUpDown)names["highIndex6Atr2"]).Value,
+                    highIndex7Atr2 = ((NumericUpDown)names["highIndex7Atr2"]).Value,
+                    highIndex8Atr2 = ((NumericUpDown)names["highIndex8Atr2"]).Value,
+                    highIndex9Atr2 = ((NumericUpDown)names["highIndex9Atr2"]).Value,
+                    highIndex10Atr2 = ((NumericUpDown)names["highIndex10Atr2"]).Value,
 
-                highIndex1Atr4 = ((NumericUpDown)names["highIndex1Atr4"]).Value,
-                highIndex2Atr4 = ((NumericUpDown)names["highIndex2Atr4"]).Value,
-                highIndex3Atr4 = ((NumericUpDown)names["highIndex3Atr4"]).Value,
-                highIndex4Atr4 = ((NumericUpDown)names["highIndex4Atr4"]).Value,
-                highIndex5Atr4 = ((NumericUpDown)names["highIndex5Atr4"]).Value,
-                highIndex6Atr4 = ((NumericUpDown)names["highIndex6Atr4"]).Value,
-                highIndex7Atr4 = ((NumericUpDown)names["highIndex7Atr4"]).Value,
-                highIndex8Atr4 = ((NumericUpDown)names["highIndex8Atr4"]).Value,
-                highIndex9Atr4 = ((NumericUpDown)names["highIndex9Atr4"]).Value,
-                highIndex10Atr4 = ((NumericUpDown)names["highIndex10Atr4"]).Value,
+                    highIndex1Atr3 = ((NumericUpDown)names["highIndex1Atr3"]).Value,
+                    highIndex2Atr3 = ((NumericUpDown)names["highIndex2Atr3"]).Value,
+                    highIndex3Atr3 = ((NumericUpDown)names["highIndex3Atr3"]).Value,
+                    highIndex4Atr3 = ((NumericUpDown)names["highIndex4Atr3"]).Value,
+                    highIndex5Atr3 = ((NumericUpDown)names["highIndex5Atr3"]).Value,
+                    highIndex6Atr3 = ((NumericUpDown)names["highIndex6Atr3"]).Value,
+                    highIndex7Atr3 = ((NumericUpDown)names["highIndex7Atr3"]).Value,
+                    highIndex8Atr3 = ((NumericUpDown)names["highIndex8Atr3"]).Value,
+                    highIndex9Atr3 = ((NumericUpDown)names["highIndex9Atr3"]).Value,
+                    highIndex10Atr3 = ((NumericUpDown)names["highIndex10Atr3"]).Value,
 
-                highIndex1Atr5 = ((NumericUpDown)names["highIndex1Atr5"]).Value,
-                highIndex2Atr5 = ((NumericUpDown)names["highIndex2Atr5"]).Value,
-                highIndex3Atr5 = ((NumericUpDown)names["highIndex3Atr5"]).Value,
-                highIndex4Atr5 = ((NumericUpDown)names["highIndex4Atr5"]).Value,
-                highIndex5Atr5 = ((NumericUpDown)names["highIndex5Atr5"]).Value,
-                highIndex6Atr5 = ((NumericUpDown)names["highIndex6Atr5"]).Value,
-                highIndex7Atr5 = ((NumericUpDown)names["highIndex7Atr5"]).Value,
-                highIndex8Atr5 = ((NumericUpDown)names["highIndex8Atr5"]).Value,
-                highIndex9Atr5 = ((NumericUpDown)names["highIndex9Atr5"]).Value,
-                highIndex10Atr5 = ((NumericUpDown)names["highIndex10Atr5"]).Value,
+                    highIndex1Atr4 = ((NumericUpDown)names["highIndex1Atr4"]).Value,
+                    highIndex2Atr4 = ((NumericUpDown)names["highIndex2Atr4"]).Value,
+                    highIndex3Atr4 = ((NumericUpDown)names["highIndex3Atr4"]).Value,
+                    highIndex4Atr4 = ((NumericUpDown)names["highIndex4Atr4"]).Value,
+                    highIndex5Atr4 = ((NumericUpDown)names["highIndex5Atr4"]).Value,
+                    highIndex6Atr4 = ((NumericUpDown)names["highIndex6Atr4"]).Value,
+                    highIndex7Atr4 = ((NumericUpDown)names["highIndex7Atr4"]).Value,
+                    highIndex8Atr4 = ((NumericUpDown)names["highIndex8Atr4"]).Value,
+                    highIndex9Atr4 = ((NumericUpDown)names["highIndex9Atr4"]).Value,
+                    highIndex10Atr4 = ((NumericUpDown)names["highIndex10Atr4"]).Value,
 
-                highIndex1Atr6 = ((NumericUpDown)names["highIndex1Atr6"]).Value,
-                highIndex2Atr6 = ((NumericUpDown)names["highIndex2Atr6"]).Value,
-                highIndex3Atr6 = ((NumericUpDown)names["highIndex3Atr6"]).Value,
-                highIndex4Atr6 = ((NumericUpDown)names["highIndex4Atr6"]).Value,
-                highIndex5Atr6 = ((NumericUpDown)names["highIndex5Atr6"]).Value,
-                highIndex6Atr6 = ((NumericUpDown)names["highIndex6Atr6"]).Value,
-                highIndex7Atr6 = ((NumericUpDown)names["highIndex7Atr6"]).Value,
-                highIndex8Atr6 = ((NumericUpDown)names["highIndex8Atr6"]).Value,
-                highIndex9Atr6 = ((NumericUpDown)names["highIndex9Atr6"]).Value,
-                highIndex10Atr6 = ((NumericUpDown)names["highIndex10Atr6"]).Value,
+                    highIndex1Atr5 = ((NumericUpDown)names["highIndex1Atr5"]).Value,
+                    highIndex2Atr5 = ((NumericUpDown)names["highIndex2Atr5"]).Value,
+                    highIndex3Atr5 = ((NumericUpDown)names["highIndex3Atr5"]).Value,
+                    highIndex4Atr5 = ((NumericUpDown)names["highIndex4Atr5"]).Value,
+                    highIndex5Atr5 = ((NumericUpDown)names["highIndex5Atr5"]).Value,
+                    highIndex6Atr5 = ((NumericUpDown)names["highIndex6Atr5"]).Value,
+                    highIndex7Atr5 = ((NumericUpDown)names["highIndex7Atr5"]).Value,
+                    highIndex8Atr5 = ((NumericUpDown)names["highIndex8Atr5"]).Value,
+                    highIndex9Atr5 = ((NumericUpDown)names["highIndex9Atr5"]).Value,
+                    highIndex10Atr5 = ((NumericUpDown)names["highIndex10Atr5"]).Value,
 
-                highIndex1Atr7 = ((NumericUpDown)names["highIndex1Atr7"]).Value,
-                highIndex2Atr7 = ((NumericUpDown)names["highIndex2Atr7"]).Value,
-                highIndex3Atr7 = ((NumericUpDown)names["highIndex3Atr7"]).Value,
-                highIndex4Atr7 = ((NumericUpDown)names["highIndex4Atr7"]).Value,
-                highIndex5Atr7 = ((NumericUpDown)names["highIndex5Atr7"]).Value,
-                highIndex6Atr7 = ((NumericUpDown)names["highIndex6Atr7"]).Value,
-                highIndex7Atr7 = ((NumericUpDown)names["highIndex7Atr7"]).Value,
-                highIndex8Atr7 = ((NumericUpDown)names["highIndex8Atr7"]).Value,
-                highIndex9Atr7 = ((NumericUpDown)names["highIndex9Atr7"]).Value,
-                highIndex10Atr7 = ((NumericUpDown)names["highIndex10Atr7"]).Value,
+                    highIndex1Atr6 = ((NumericUpDown)names["highIndex1Atr6"]).Value,
+                    highIndex2Atr6 = ((NumericUpDown)names["highIndex2Atr6"]).Value,
+                    highIndex3Atr6 = ((NumericUpDown)names["highIndex3Atr6"]).Value,
+                    highIndex4Atr6 = ((NumericUpDown)names["highIndex4Atr6"]).Value,
+                    highIndex5Atr6 = ((NumericUpDown)names["highIndex5Atr6"]).Value,
+                    highIndex6Atr6 = ((NumericUpDown)names["highIndex6Atr6"]).Value,
+                    highIndex7Atr6 = ((NumericUpDown)names["highIndex7Atr6"]).Value,
+                    highIndex8Atr6 = ((NumericUpDown)names["highIndex8Atr6"]).Value,
+                    highIndex9Atr6 = ((NumericUpDown)names["highIndex9Atr6"]).Value,
+                    highIndex10Atr6 = ((NumericUpDown)names["highIndex10Atr6"]).Value,
 
-                highIndex1Atr8 = ((NumericUpDown)names["highIndex1Atr8"]).Value,
-                highIndex2Atr8 = ((NumericUpDown)names["highIndex2Atr8"]).Value,
-                highIndex3Atr8 = ((NumericUpDown)names["highIndex3Atr8"]).Value,
-                highIndex4Atr8 = ((NumericUpDown)names["highIndex4Atr8"]).Value,
-                highIndex5Atr8 = ((NumericUpDown)names["highIndex5Atr8"]).Value,
-                highIndex6Atr8 = ((NumericUpDown)names["highIndex6Atr8"]).Value,
-                highIndex7Atr8 = ((NumericUpDown)names["highIndex7Atr8"]).Value,
-                highIndex8Atr8 = ((NumericUpDown)names["highIndex8Atr8"]).Value,
-                highIndex9Atr8 = ((NumericUpDown)names["highIndex9Atr8"]).Value,
-                highIndex10Atr8 = ((NumericUpDown)names["highIndex10Atr8"]).Value,
+                    highIndex1Atr7 = ((NumericUpDown)names["highIndex1Atr7"]).Value,
+                    highIndex2Atr7 = ((NumericUpDown)names["highIndex2Atr7"]).Value,
+                    highIndex3Atr7 = ((NumericUpDown)names["highIndex3Atr7"]).Value,
+                    highIndex4Atr7 = ((NumericUpDown)names["highIndex4Atr7"]).Value,
+                    highIndex5Atr7 = ((NumericUpDown)names["highIndex5Atr7"]).Value,
+                    highIndex6Atr7 = ((NumericUpDown)names["highIndex6Atr7"]).Value,
+                    highIndex7Atr7 = ((NumericUpDown)names["highIndex7Atr7"]).Value,
+                    highIndex8Atr7 = ((NumericUpDown)names["highIndex8Atr7"]).Value,
+                    highIndex9Atr7 = ((NumericUpDown)names["highIndex9Atr7"]).Value,
+                    highIndex10Atr7 = ((NumericUpDown)names["highIndex10Atr7"]).Value,
 
-                highIndex1Atr9 = ((NumericUpDown)names["highIndex1Atr9"]).Value,
-                highIndex2Atr9 = ((NumericUpDown)names["highIndex2Atr9"]).Value,
-                highIndex3Atr9 = ((NumericUpDown)names["highIndex3Atr9"]).Value,
-                highIndex4Atr9 = ((NumericUpDown)names["highIndex4Atr9"]).Value,
-                highIndex5Atr9 = ((NumericUpDown)names["highIndex5Atr9"]).Value,
-                highIndex6Atr9 = ((NumericUpDown)names["highIndex6Atr9"]).Value,
-                highIndex7Atr9 = ((NumericUpDown)names["highIndex7Atr9"]).Value,
-                highIndex8Atr9 = ((NumericUpDown)names["highIndex8Atr9"]).Value,
-                highIndex9Atr9 = ((NumericUpDown)names["highIndex9Atr9"]).Value,
-                highIndex10Atr9 = ((NumericUpDown)names["highIndex10Atr9"]).Value,
+                    highIndex1Atr8 = ((NumericUpDown)names["highIndex1Atr8"]).Value,
+                    highIndex2Atr8 = ((NumericUpDown)names["highIndex2Atr8"]).Value,
+                    highIndex3Atr8 = ((NumericUpDown)names["highIndex3Atr8"]).Value,
+                    highIndex4Atr8 = ((NumericUpDown)names["highIndex4Atr8"]).Value,
+                    highIndex5Atr8 = ((NumericUpDown)names["highIndex5Atr8"]).Value,
+                    highIndex6Atr8 = ((NumericUpDown)names["highIndex6Atr8"]).Value,
+                    highIndex7Atr8 = ((NumericUpDown)names["highIndex7Atr8"]).Value,
+                    highIndex8Atr8 = ((NumericUpDown)names["highIndex8Atr8"]).Value,
+                    highIndex9Atr8 = ((NumericUpDown)names["highIndex9Atr8"]).Value,
+                    highIndex10Atr8 = ((NumericUpDown)names["highIndex10Atr8"]).Value,
 
-                highIndex1Atr10 = ((NumericUpDown)names["highIndex1Atr10"]).Value,
-                highIndex2Atr10 = ((NumericUpDown)names["highIndex2Atr10"]).Value,
-                highIndex3Atr10 = ((NumericUpDown)names["highIndex3Atr10"]).Value,
-                highIndex4Atr10 = ((NumericUpDown)names["highIndex4Atr10"]).Value,
-                highIndex5Atr10 = ((NumericUpDown)names["highIndex5Atr10"]).Value,
-                highIndex6Atr10 = ((NumericUpDown)names["highIndex6Atr10"]).Value,
-                highIndex7Atr10 = ((NumericUpDown)names["highIndex7Atr10"]).Value,
-                highIndex8Atr10 = ((NumericUpDown)names["highIndex8Atr10"]).Value,
-                highIndex9Atr10 = ((NumericUpDown)names["highIndex9Atr10"]).Value,
-                highIndex10Atr10 = ((NumericUpDown)names["highIndex10Atr10"]).Value
-            });
+                    highIndex1Atr9 = ((NumericUpDown)names["highIndex1Atr9"]).Value,
+                    highIndex2Atr9 = ((NumericUpDown)names["highIndex2Atr9"]).Value,
+                    highIndex3Atr9 = ((NumericUpDown)names["highIndex3Atr9"]).Value,
+                    highIndex4Atr9 = ((NumericUpDown)names["highIndex4Atr9"]).Value,
+                    highIndex5Atr9 = ((NumericUpDown)names["highIndex5Atr9"]).Value,
+                    highIndex6Atr9 = ((NumericUpDown)names["highIndex6Atr9"]).Value,
+                    highIndex7Atr9 = ((NumericUpDown)names["highIndex7Atr9"]).Value,
+                    highIndex8Atr9 = ((NumericUpDown)names["highIndex8Atr9"]).Value,
+                    highIndex9Atr9 = ((NumericUpDown)names["highIndex9Atr9"]).Value,
+                    highIndex10Atr9 = ((NumericUpDown)names["highIndex10Atr9"]).Value,
 
-            string json = JsonSerializer.Serialize(boundReadyState);
+                    highIndex1Atr10 = ((NumericUpDown)names["highIndex1Atr10"]).Value,
+                    highIndex2Atr10 = ((NumericUpDown)names["highIndex2Atr10"]).Value,
+                    highIndex3Atr10 = ((NumericUpDown)names["highIndex3Atr10"]).Value,
+                    highIndex4Atr10 = ((NumericUpDown)names["highIndex4Atr10"]).Value,
+                    highIndex5Atr10 = ((NumericUpDown)names["highIndex5Atr10"]).Value,
+                    highIndex6Atr10 = ((NumericUpDown)names["highIndex6Atr10"]).Value,
+                    highIndex7Atr10 = ((NumericUpDown)names["highIndex7Atr10"]).Value,
+                    highIndex8Atr10 = ((NumericUpDown)names["highIndex8Atr10"]).Value,
+                    highIndex9Atr10 = ((NumericUpDown)names["highIndex9Atr10"]).Value,
+                    highIndex10Atr10 = ((NumericUpDown)names["highIndex10Atr10"]).Value
+                });
 
-            File.WriteAllText(@"D:\path.json", json);
+                string json = JsonSerializer.Serialize(boundReadyState);
 
-            MessageBox.Show("SHIT WORKS CUH", "SUCCESS");
+                File.WriteAllText(@"D:\path.json", json);
+
+                Form3 form3 = new Form3();
+                form3.Show();
+            }
         }
-    }
 
-    public class brs
-    {
-        public brs(){ }
+        public class brs
+        {
+            public brs(Form2 curForm) { }
+            public string[] dialogAtr1 { get; set; }
+            public string[] dialogAtr2 { get; set; }
+            public string[] dialogAtr3 { get; set; }
+            public string[] dialogAtr4 { get; set; }
+            public string[] dialogAtr5 { get; set; }
+            public string[] dialogAtr6 { get; set; }
+            public string[] dialogAtr7 { get; set; }
+            public string[] dialogAtr8 { get; set; }
+            public string[] dialogAtr9 { get; set; }
+            public string[] dialogAtr10 { get; set; }
+
             public string n1 { get; set; }
             public string n2 { get; set; }
             public string n3 { get; set; }
@@ -1321,6 +1392,7 @@ namespace easyNFT
             public decimal highIndex7Atr10 { get; set; }
             public decimal highIndex8Atr10 { get; set; }
             public decimal highIndex9Atr10 { get; set; }
-            public decimal highIndex10Atr10 { get; set; }   
+            public decimal highIndex10Atr10 { get; set; }
+        }   
     }
 }
