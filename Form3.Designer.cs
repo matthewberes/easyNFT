@@ -95,7 +95,6 @@ namespace easyNFT
             this.textBox1.Size = new System.Drawing.Size(176, 27);
             this.textBox1.TabIndex = 6;
             this.textBox1.Text = "D:\\path.json";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnSave
             // 

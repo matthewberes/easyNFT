@@ -450,7 +450,8 @@ namespace easyNFT
         //check for gaps
         static int boundCheckAtr(Form curForm, int atrVal, int indexNum)
         {
-            Dictionary<string, int> names = new Dictionary<string, int>();
+            decimal curMax = (decimal)(1 - ((indexNum - 1) * 0.01));
+            Dictionary<string, decimal> names = new Dictionary<string, decimal>();
 
             for (int i = 1; i <= indexNum; i++)
             {
@@ -515,11 +516,11 @@ namespace easyNFT
 
                 //check sum initialization
                 string tempVal = "val" + i.ToString();
-                names[tempVal] = (int)((NumericUpDown)curHighControl).Value - (int)((NumericUpDown)curLowControl).Value;
+                names[tempVal] = ((NumericUpDown)curHighControl).Value - ((NumericUpDown)curLowControl).Value;
             }
             //check sum operation
-            int sum = 0;
-            foreach (KeyValuePair<string, int> entry in names)
+            decimal sum = 0;
+            foreach (KeyValuePair<string, decimal> entry in names)
             {
                 sum += entry.Value;
                 if (sum > 1)
@@ -528,7 +529,7 @@ namespace easyNFT
                     return 1;
                 }
             }
-            if (sum < 1)
+            if (sum < curMax)
             {
                 MessageBox.Show("Atr " + atrVal.ToString() + "'s values summed are less than 1", "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 1;
@@ -558,8 +559,10 @@ namespace easyNFT
             int errorBC = 0;
             int errorGA = 0;
 
-
             Dictionary<string, Control> names = new Dictionary<string, Control>();
+            names["submitAmount"] = this.Controls.Find("submitAmount", true).Single();
+
+            names["atrNum"] = this.mainForm.Controls.Find("atrNum", true).Single();
 
             names["n1"] = this.mainForm.Controls.Find("inputNameAtr1", true).Single();
             names["n2"] = this.mainForm.Controls.Find("inputNameAtr2", true).Single();
@@ -859,17 +862,26 @@ namespace easyNFT
             {
                 string temp = "q" + i.ToString();
                 int test = (int)((NumericUpDown)names[temp]).Value;
-                if(errorBC == 0)
+                errorBC = boundCheckAtr(this, i, test);
+                if (errorBC == 1) 
                 {
-                    errorBC = boundCheckAtr(this, i, test);
+                    i = ((ComboBox)totalAtr).SelectedIndex + 1;
                 }
             }
             errorGA = getAmount();
             if (errorBC != 1 && errorGA != 1)
-            {       
+            {
+                nftObject[] nftArr = new nftObject[(int)((NumericUpDown)names["submitAmount"]).Value];
+                for(int i = 0; i < nftArr.Length; i++)
+                {
+                    nftArr[i] = new nftObject(((ComboBox)totalAtr).SelectedIndex + 1);
+                }
+
                 List<brs> boundReadyState = new List<brs>();
                 boundReadyState.Add(new brs(this)
                 {
+                    submitAmount = ((NumericUpDown)names["submitAmount"]).Value,
+                    nftArray = nftArr,
 
                     dialogAtr1 = filesAtr1.FileNames,
                     dialogAtr2 = filesAtr2.FileNames,
@@ -1127,7 +1139,8 @@ namespace easyNFT
                     highIndex10Atr10 = ((NumericUpDown)names["highIndex10Atr10"]).Value
                 });
 
-                string json = JsonSerializer.Serialize(boundReadyState);
+                var options = new JsonSerializerOptions() { WriteIndented = true };
+                string json = JsonSerializer.Serialize(boundReadyState, options);
 
                 File.WriteAllText(@"D:\path.json", json);
 
@@ -1136,9 +1149,29 @@ namespace easyNFT
             }
         }
 
+        public class nftObject: Random
+        {
+            public decimal atrNum { get; set; }
+            public double[] attributes { get; set; }
+
+            public nftObject(int atrNum)
+            {
+                attributes = new double[(int)atrNum];
+                this.atrNum = atrNum;
+                for(int i = 0; i < atrNum; i++)
+                {
+                    attributes[i] = NextDouble();
+                }
+            }
+        }
+
         public class brs
         {
             public brs(Form2 curForm) { }
+            public decimal submitAmount { get; set; } 
+
+            public nftObject[] nftArray { get; set; }
+
             public string[] dialogAtr1 { get; set; }
             public string[] dialogAtr2 { get; set; }
             public string[] dialogAtr3 { get; set; }

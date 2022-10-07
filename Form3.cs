@@ -21,7 +21,7 @@ namespace easyNFT
         private void btnChange_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
+            dialog.Filter = "Json files (*.json)|*.json"; // file types, that will be allowed to upload
             dialog.Multiselect = false; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
