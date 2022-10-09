@@ -871,28 +871,29 @@ namespace easyNFT
             errorGA = getAmount();
             if (errorBC != 1 && errorGA != 1)
             {
-                nftObject[] nftArr = new nftObject[(int)((NumericUpDown)names["submitAmount"]).Value];
-                for(int i = 0; i < nftArr.Length; i++)
+                nftObject[] nftArray = new nftObject[(int)((NumericUpDown)names["submitAmount"]).Value];
+                for(int i = 0; i < nftArray.Length; i++)
                 {
-                    nftArr[i] = new nftObject(((ComboBox)totalAtr).SelectedIndex + 1);
+                    nftArray[i] = new nftObject(((ComboBox)totalAtr).SelectedIndex + 1);
                 }
 
                 List<brs> boundReadyState = new List<brs>();
-                boundReadyState.Add(new brs(this)
+                boundReadyState.Add(new brs()
                 {
+                    atrNum = ((ComboBox)names["atrNum"]).SelectedIndex + 1,
                     submitAmount = ((NumericUpDown)names["submitAmount"]).Value,
-                    nftArray = nftArr,
+                    nftArray = nftArray,
 
-                    dialogAtr1 = filesAtr1.FileNames,
-                    dialogAtr2 = filesAtr2.FileNames,
-                    dialogAtr3 = filesAtr3.FileNames,
-                    dialogAtr4 = filesAtr4.FileNames,
-                    dialogAtr5 = filesAtr5.FileNames,
-                    dialogAtr6 = filesAtr6.FileNames,
-                    dialogAtr7 = filesAtr7.FileNames,
-                    dialogAtr8 = filesAtr8.FileNames,
-                    dialogAtr9 = filesAtr9.FileNames,
-                    dialogAtr10 = filesAtr10.FileNames,
+                    filesAtr1 = filesAtr1.FileNames,
+                    filesAtr2 = filesAtr2.FileNames,
+                    filesAtr3 = filesAtr3.FileNames,
+                    filesAtr4 = filesAtr4.FileNames,
+                    filesAtr5 = filesAtr5.FileNames,
+                    filesAtr6 = filesAtr6.FileNames,
+                    filesAtr7 = filesAtr7.FileNames,
+                    filesAtr8 = filesAtr8.FileNames,
+                    filesAtr9 = filesAtr9.FileNames,
+                    filesAtr10 = filesAtr10.FileNames,
 
                     n1 = ((TextBox)names["n1"]).Text,
                     n2 = ((TextBox)names["n2"]).Text,
@@ -1141,291 +1142,13 @@ namespace easyNFT
 
                 var options = new JsonSerializerOptions() { WriteIndented = true };
                 string json = JsonSerializer.Serialize(boundReadyState, options);
+                //string json = JsonSerializer.Serialize(boundReadyState);
 
                 File.WriteAllText(@"D:\path.json", json);
 
                 Form3 form3 = new Form3();
                 form3.Show();
             }
-        }
-
-        public class nftObject: Random
-        {
-            public decimal atrNum { get; set; }
-            public double[] attributes { get; set; }
-
-            public nftObject(int atrNum)
-            {
-                attributes = new double[(int)atrNum];
-                this.atrNum = atrNum;
-                for(int i = 0; i < atrNum; i++)
-                {
-                    attributes[i] = NextDouble();
-                }
-            }
-        }
-
-        public class brs
-        {
-            public brs(Form2 curForm) { }
-            public decimal submitAmount { get; set; } 
-
-            public nftObject[] nftArray { get; set; }
-
-            public string[] dialogAtr1 { get; set; }
-            public string[] dialogAtr2 { get; set; }
-            public string[] dialogAtr3 { get; set; }
-            public string[] dialogAtr4 { get; set; }
-            public string[] dialogAtr5 { get; set; }
-            public string[] dialogAtr6 { get; set; }
-            public string[] dialogAtr7 { get; set; }
-            public string[] dialogAtr8 { get; set; }
-            public string[] dialogAtr9 { get; set; }
-            public string[] dialogAtr10 { get; set; }
-
-            public string n1 { get; set; }
-            public string n2 { get; set; }
-            public string n3 { get; set; }
-            public string n4 { get; set; }
-            public string n5 { get; set; }
-            public string n6 { get; set; }
-            public string n7 { get; set; }
-            public string n8 { get; set; }
-            public string n9 { get; set; }
-            public string n10 { get; set; }
-
-            public decimal q1 { get; set; }
-            public decimal q2 { get; set; }
-            public decimal q3 { get; set; }
-            public decimal q4 { get; set; }
-            public decimal q5 { get; set; }
-            public decimal q6 { get; set; }
-            public decimal q7 { get; set; }
-            public decimal q8 { get; set; }
-            public decimal q9 { get; set; }
-            public decimal q10 { get; set; }
-
-            //lows
-            public decimal lowIndex1Atr1 { get; set; }
-            public decimal lowIndex2Atr1 { get; set; }
-            public decimal lowIndex3Atr1 { get; set; }
-            public decimal lowIndex4Atr1 { get; set; }
-            public decimal lowIndex5Atr1 { get; set; }
-            public decimal lowIndex6Atr1 { get; set; }
-            public decimal lowIndex7Atr1 { get; set; }
-            public decimal lowIndex8Atr1 { get; set; }
-            public decimal lowIndex9Atr1 { get; set; }
-            public decimal lowIndex10Atr1 { get; set; }
-
-            public decimal lowIndex1Atr2 { get; set; }
-            public decimal lowIndex2Atr2 { get; set; }
-            public decimal lowIndex3Atr2 { get; set; }
-            public decimal lowIndex4Atr2 { get; set; }
-            public decimal lowIndex5Atr2 { get; set; }
-            public decimal lowIndex6Atr2 { get; set; }
-            public decimal lowIndex7Atr2 { get; set; }
-            public decimal lowIndex8Atr2 { get; set; }
-            public decimal lowIndex9Atr2 { get; set; }
-            public decimal lowIndex10Atr2 { get; set; }
-
-            public decimal lowIndex1Atr3 { get; set; }
-            public decimal lowIndex2Atr3 { get; set; }
-            public decimal lowIndex3Atr3 { get; set; }
-            public decimal lowIndex4Atr3 { get; set; }
-            public decimal lowIndex5Atr3 { get; set; }
-            public decimal lowIndex6Atr3 { get; set; }
-            public decimal lowIndex7Atr3 { get; set; }
-            public decimal lowIndex8Atr3 { get; set; }
-            public decimal lowIndex9Atr3 { get; set; }
-            public decimal lowIndex10Atr3 { get; set; }
-
-            public decimal lowIndex1Atr4 { get; set; }
-            public decimal lowIndex2Atr4 { get; set; }
-            public decimal lowIndex3Atr4 { get; set; }
-            public decimal lowIndex4Atr4 { get; set; }
-            public decimal lowIndex5Atr4 { get; set; }
-            public decimal lowIndex6Atr4 { get; set; }
-            public decimal lowIndex7Atr4 { get; set; }
-            public decimal lowIndex8Atr4 { get; set; }
-            public decimal lowIndex9Atr4 { get; set; }
-            public decimal lowIndex10Atr4 { get; set; }
-
-            public decimal lowIndex1Atr5 { get; set; }
-            public decimal lowIndex2Atr5 { get; set; }
-            public decimal lowIndex3Atr5 { get; set; }
-            public decimal lowIndex4Atr5 { get; set; }
-            public decimal lowIndex5Atr5 { get; set; }
-            public decimal lowIndex6Atr5 { get; set; }
-            public decimal lowIndex7Atr5 { get; set; }
-            public decimal lowIndex8Atr5 { get; set; }
-            public decimal lowIndex9Atr5 { get; set; }
-            public decimal lowIndex10Atr5 { get; set; }
-
-            public decimal lowIndex1Atr6 { get; set; }
-            public decimal lowIndex2Atr6 { get; set; }
-            public decimal lowIndex3Atr6 { get; set; }
-            public decimal lowIndex4Atr6 { get; set; }
-            public decimal lowIndex5Atr6 { get; set; }
-            public decimal lowIndex6Atr6 { get; set; }
-            public decimal lowIndex7Atr6 { get; set; }
-            public decimal lowIndex8Atr6 { get; set; }
-            public decimal lowIndex9Atr6 { get; set; }
-            public decimal lowIndex10Atr6 { get; set; }
-
-            public decimal lowIndex1Atr7 { get; set; }
-            public decimal lowIndex2Atr7 { get; set; }
-            public decimal lowIndex3Atr7 { get; set; }
-            public decimal lowIndex4Atr7 { get; set; }
-            public decimal lowIndex5Atr7 { get; set; }
-            public decimal lowIndex6Atr7 { get; set; }
-            public decimal lowIndex7Atr7 { get; set; }
-            public decimal lowIndex8Atr7 { get; set; }
-            public decimal lowIndex9Atr7 { get; set; }
-            public decimal lowIndex10Atr7 { get; set; }
-
-            public decimal lowIndex1Atr8 { get; set; }
-            public decimal lowIndex2Atr8 { get; set; }
-            public decimal lowIndex3Atr8 { get; set; }
-            public decimal lowIndex4Atr8 { get; set; }
-            public decimal lowIndex5Atr8 { get; set; }
-            public decimal lowIndex6Atr8 { get; set; }
-            public decimal lowIndex7Atr8 { get; set; }
-            public decimal lowIndex8Atr8 { get; set; }
-            public decimal lowIndex9Atr8 { get; set; }
-            public decimal lowIndex10Atr8 { get; set; }
-
-            public decimal lowIndex1Atr9 { get; set; }
-            public decimal lowIndex2Atr9 { get; set; }
-            public decimal lowIndex3Atr9 { get; set; }
-            public decimal lowIndex4Atr9 { get; set; }
-            public decimal lowIndex5Atr9 { get; set; }
-            public decimal lowIndex6Atr9 { get; set; }
-            public decimal lowIndex7Atr9 { get; set; }
-            public decimal lowIndex8Atr9 { get; set; }
-            public decimal lowIndex9Atr9 { get; set; }
-            public decimal lowIndex10Atr9 { get; set; }
-
-            public decimal lowIndex1Atr10 { get; set; }
-            public decimal lowIndex2Atr10 { get; set; }
-            public decimal lowIndex3Atr10 { get; set; }
-            public decimal lowIndex4Atr10 { get; set; }
-            public decimal lowIndex5Atr10 { get; set; }
-            public decimal lowIndex6Atr10 { get; set; }
-            public decimal lowIndex7Atr10 { get; set; }
-            public decimal lowIndex8Atr10 { get; set; }
-            public decimal lowIndex9Atr10 { get; set; }
-            public decimal lowIndex10Atr10 { get; set; }
-
-            //highs               
-            public decimal highIndex1Atr1 { get; set; }
-            public decimal highIndex2Atr1 { get; set; }
-            public decimal highIndex3Atr1 { get; set; }
-            public decimal highIndex4Atr1 { get; set; }
-            public decimal highIndex5Atr1 { get; set; }
-            public decimal highIndex6Atr1 { get; set; }
-            public decimal highIndex7Atr1 { get; set; }
-            public decimal highIndex8Atr1 { get; set; }
-            public decimal highIndex9Atr1 { get; set; }
-            public decimal highIndex10Atr1 { get; set; }
-
-            public decimal highIndex1Atr2 { get; set; }
-            public decimal highIndex2Atr2 { get; set; }
-            public decimal highIndex3Atr2 { get; set; }
-            public decimal highIndex4Atr2 { get; set; }
-            public decimal highIndex5Atr2 { get; set; }
-            public decimal highIndex6Atr2 { get; set; }
-            public decimal highIndex7Atr2 { get; set; }
-            public decimal highIndex8Atr2 { get; set; }
-            public decimal highIndex9Atr2 { get; set; }
-            public decimal highIndex10Atr2 { get; set; }
-
-            public decimal highIndex1Atr3 { get; set; }
-            public decimal highIndex2Atr3 { get; set; }
-            public decimal highIndex3Atr3 { get; set; }
-            public decimal highIndex4Atr3 { get; set; }
-            public decimal highIndex5Atr3 { get; set; }
-            public decimal highIndex6Atr3 { get; set; }
-            public decimal highIndex7Atr3 { get; set; }
-            public decimal highIndex8Atr3 { get; set; }
-            public decimal highIndex9Atr3 { get; set; }
-            public decimal highIndex10Atr3 { get; set; }
-
-            public decimal highIndex1Atr4 { get; set; }
-            public decimal highIndex2Atr4 { get; set; }
-            public decimal highIndex3Atr4 { get; set; }
-            public decimal highIndex4Atr4 { get; set; }
-            public decimal highIndex5Atr4 { get; set; }
-            public decimal highIndex6Atr4 { get; set; }
-            public decimal highIndex7Atr4 { get; set; }
-            public decimal highIndex8Atr4 { get; set; }
-            public decimal highIndex9Atr4 { get; set; }
-            public decimal highIndex10Atr4 { get; set; }
-
-            public decimal highIndex1Atr5 { get; set; }
-            public decimal highIndex2Atr5 { get; set; }
-            public decimal highIndex3Atr5 { get; set; }
-            public decimal highIndex4Atr5 { get; set; }
-            public decimal highIndex5Atr5 { get; set; }
-            public decimal highIndex6Atr5 { get; set; }
-            public decimal highIndex7Atr5 { get; set; }
-            public decimal highIndex8Atr5 { get; set; }
-            public decimal highIndex9Atr5 { get; set; }
-            public decimal highIndex10Atr5 { get; set; }
-
-            public decimal highIndex1Atr6 { get; set; }
-            public decimal highIndex2Atr6 { get; set; }
-            public decimal highIndex3Atr6 { get; set; }
-            public decimal highIndex4Atr6 { get; set; }
-            public decimal highIndex5Atr6 { get; set; }
-            public decimal highIndex6Atr6 { get; set; }
-            public decimal highIndex7Atr6 { get; set; }
-            public decimal highIndex8Atr6 { get; set; }
-            public decimal highIndex9Atr6 { get; set; }
-            public decimal highIndex10Atr6 { get; set; }
-
-            public decimal highIndex1Atr7 { get; set; }
-            public decimal highIndex2Atr7 { get; set; }
-            public decimal highIndex3Atr7 { get; set; }
-            public decimal highIndex4Atr7 { get; set; }
-            public decimal highIndex5Atr7 { get; set; }
-            public decimal highIndex6Atr7 { get; set; }
-            public decimal highIndex7Atr7 { get; set; }
-            public decimal highIndex8Atr7 { get; set; }
-            public decimal highIndex9Atr7 { get; set; }
-            public decimal highIndex10Atr7 { get; set; }
-
-            public decimal highIndex1Atr8 { get; set; }
-            public decimal highIndex2Atr8 { get; set; }
-            public decimal highIndex3Atr8 { get; set; }
-            public decimal highIndex4Atr8 { get; set; }
-            public decimal highIndex5Atr8 { get; set; }
-            public decimal highIndex6Atr8 { get; set; }
-            public decimal highIndex7Atr8 { get; set; }
-            public decimal highIndex8Atr8 { get; set; }
-            public decimal highIndex9Atr8 { get; set; }
-            public decimal highIndex10Atr8 { get; set; }
-
-            public decimal highIndex1Atr9 { get; set; }
-            public decimal highIndex2Atr9 { get; set; }
-            public decimal highIndex3Atr9 { get; set; }
-            public decimal highIndex4Atr9 { get; set; }
-            public decimal highIndex5Atr9 { get; set; }
-            public decimal highIndex6Atr9 { get; set; }
-            public decimal highIndex7Atr9 { get; set; }
-            public decimal highIndex8Atr9 { get; set; }
-            public decimal highIndex9Atr9 { get; set; }
-            public decimal highIndex10Atr9 { get; set; }
-
-            public decimal highIndex1Atr10 { get; set; }
-            public decimal highIndex2Atr10 { get; set; }
-            public decimal highIndex3Atr10 { get; set; }
-            public decimal highIndex4Atr10 { get; set; }
-            public decimal highIndex5Atr10 { get; set; }
-            public decimal highIndex6Atr10 { get; set; }
-            public decimal highIndex7Atr10 { get; set; }
-            public decimal highIndex8Atr10 { get; set; }
-            public decimal highIndex9Atr10 { get; set; }
-            public decimal highIndex10Atr10 { get; set; }
-        }   
+        }       
     }
 }

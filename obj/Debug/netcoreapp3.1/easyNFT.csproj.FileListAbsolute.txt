@@ -15,3 +15,5 @@ C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.pdb
 C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.genruntimeconfig.cache
 C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.Form2.resources
 C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.Form3.resources
+C:\Users\matty\source\repos\easyNFT\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\matty\source\repos\easyNFT\obj\Debug\netcoreapp3.1\easyNFT.csproj.CopyComplete

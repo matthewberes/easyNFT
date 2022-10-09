@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "jZtA0PwAJP0h9DeGsfavy9oNHO1sVWQWAyKwEOxt8L7nYurKTHUBvlSY/d3HmAVc2WMpLlVuXacQvJ/f6YSeqA==",
+  "dgSpecHash": "gWP5v44y9+UzTwTswYatOY8xeewp/PqTWyiExMvcctLP52PmSbmWMAs0rnRMlMAVGA95dUqOOS0BrQTOOmpvQQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\matty\\source\\repos\\easyNFT\\easyNFT.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\matty\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

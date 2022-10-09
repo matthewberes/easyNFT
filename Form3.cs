@@ -6,12 +6,16 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace easyNFT
 {
     public partial class Form3 : Form
     {
-        public string curTemplatePath = "D:\\path.json";
+        public string curTemplatePath = @"D:\path.json";
         
         public Form3()
         {
@@ -25,14 +29,21 @@ namespace easyNFT
             dialog.Multiselect = false; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
-                textBox1.Text = dialog.FileName;
+                curPath.Text = dialog.FileName;
                 curTemplatePath = dialog.FileName;
             }
         }
 
         private void btnView_Click(object sender, EventArgs e)
         {
-            //curTemplatePAth
+            //Control curPath = this.Controls.Find("curPath", true)[0];
+
+            var jsonString = File.ReadAllText(curTemplatePath);
+
+            List<brs> brsJson = JsonConvert.DeserializeObject<List<brs>>(jsonString);
+            brs curJSON = brsJson[0];
+            //INTERPRET TIME
+            int i = 0; //debug line
         }
         private void btnSave_Click(object sender, EventArgs e)
         {

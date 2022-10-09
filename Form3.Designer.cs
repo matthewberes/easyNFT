@@ -34,7 +34,7 @@ namespace easyNFT
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnChange = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.curPath = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -87,14 +87,14 @@ namespace easyNFT
             this.btnChange.UseVisualStyleBackColor = true;
             this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
             // 
-            // textBox1
+            // curPath
             // 
-            this.textBox1.Location = new System.Drawing.Point(165, 33);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(176, 27);
-            this.textBox1.TabIndex = 6;
-            this.textBox1.Text = "D:\\path.json";
+            this.curPath.Location = new System.Drawing.Point(165, 33);
+            this.curPath.Name = "curPath";
+            this.curPath.ReadOnly = true;
+            this.curPath.Size = new System.Drawing.Size(176, 27);
+            this.curPath.TabIndex = 6;
+            this.curPath.Text = "D:\\path.json";
             // 
             // btnSave
             // 
@@ -125,7 +125,7 @@ namespace easyNFT
             this.ClientSize = new System.Drawing.Size(492, 195);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.curPath);
             this.Controls.Add(this.btnChange);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -146,7 +146,7 @@ namespace easyNFT
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnChange;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox curPath;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button btnSave;
