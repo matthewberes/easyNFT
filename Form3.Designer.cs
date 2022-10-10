@@ -36,8 +36,8 @@ namespace easyNFT
             this.btnChange = new System.Windows.Forms.Button();
             this.curPath = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.nftSelected = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.nftSelected)).BeginInit();
             this.SuspendLayout();
             // 
             // btnView
@@ -106,24 +106,24 @@ namespace easyNFT
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // numericUpDown1
+            // nftSelected
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(205, 82);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.nftSelected.Location = new System.Drawing.Point(205, 82);
+            this.nftSelected.Maximum = new decimal(new int[] {
             50000,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(68, 27);
-            this.numericUpDown1.TabIndex = 8;
+            this.nftSelected.Name = "nftSelected";
+            this.nftSelected.Size = new System.Drawing.Size(68, 27);
+            this.nftSelected.TabIndex = 8;
             // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(492, 195);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.nftSelected);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.curPath);
             this.Controls.Add(this.btnChange);
@@ -133,7 +133,7 @@ namespace easyNFT
             this.Controls.Add(this.btnView);
             this.Name = "Form3";
             this.Text = "Form3";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nftSelected)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,7 +148,7 @@ namespace easyNFT
         private System.Windows.Forms.Button btnChange;
         private System.Windows.Forms.TextBox curPath;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nftSelected;
         private System.Windows.Forms.Button btnSave;
     }
 }

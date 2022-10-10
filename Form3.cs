@@ -16,10 +16,12 @@ namespace easyNFT
     public partial class Form3 : Form
     {
         public string curTemplatePath = @"D:\path.json";
+        public static dictionary curControls;
         
-        public Form3()
+        public Form3(dictionary curDict)
         {
             InitializeComponent();
+            curControls = curDict;
         }
 
         private void btnChange_Click(object sender, EventArgs e)
@@ -41,9 +43,9 @@ namespace easyNFT
             var jsonString = File.ReadAllText(curTemplatePath);
 
             List<brs> brsJson = JsonConvert.DeserializeObject<List<brs>>(jsonString);
-            brs curJSON = brsJson[0];
+            //brs curJSON = brsJson[0];
             //INTERPRET TIME
-            int i = 0; //debug line
+            nftView(brsJson[0]);
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -56,6 +58,37 @@ namespace easyNFT
                     System.IO.File.Copy(@"D:\path.json", saveCur.FileName, true);
             }
                 MessageBox.Show("SHIT WORKS CUH", "SUCCESS");
+        }
+
+        public void nftView(brs json)
+        {
+            Control nftForView = this.Controls.Find("nftSelected", true)[0];
+            //check for error, selected nft does not exist, if (nftSelected > curControls.curDict[nftArray].Length)
+
+
+            for(int i = 0; i <= json.atrNum; i++) 
+            {
+                for(int j = 0; j <= json.q[i]; j++)
+                {
+                    //double curAtrVal = json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i];
+
+                    string tempLow = "lowIndex" + (j + 1).ToString() + "Atr" + (i + 1).ToString();
+                    string tempHigh = "highIndex" + (j + 1).ToString() + "Atr" + (i + 1).ToString();
+
+                    Control curIndexLow = curControls.curDict[tempLow];
+                    Control curIndexHigh = curControls.curDict[tempHigh];
+
+                    if (i < json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes.Length)
+                    {
+                        if (json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] > (double)((NumericUpDown)curIndexLow).Value && json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] < (double)((NumericUpDown)curIndexHigh).Value)
+                        {
+                            MessageBox.Show("atr " + (i + 1).ToString() + " falls under index " + (j + 1).ToString(), json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i].ToString());
+                        }
+                    }                     
+                }
+                string test = json.filesAtr1[0]; 
+            } 
+           
         }
     }
 }

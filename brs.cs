@@ -23,6 +23,9 @@ namespace easyNFT
         public string[] filesAtr9 { get; set; }
         public string[] filesAtr10 { get; set; }
 
+        public string[] n { get; set; }
+        public decimal[] q { get; set; }
+
         public string n1 { get; set; }
         public string n2 { get; set; }
         public string n3 { get; set; }
