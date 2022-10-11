@@ -118,9 +118,11 @@ namespace easyNFT
                             return;
                         }
 
+                        
+
                         if (i < json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes.Length)
                         {
-                            if (json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] > (double)curIndexLow && json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] < (double)curIndexHigh)
+                            if (Math.Round(json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i], 2) >= (double)curIndexLow && Math.Round(json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i], 2) <= (double)curIndexHigh)
                             {
                                 //debug bounds checking
                                 //MessageBox.Show("atr " + (i + 1).ToString() + " falls under index " + (j + 1).ToString(), json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i].ToString());
@@ -155,9 +157,11 @@ namespace easyNFT
                             return;
                         }
 
+                        double test = Math.Round(json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i], 2);
+
                         if (i < json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes.Length)
                         {
-                            if (json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] > (double)((NumericUpDown)curIndexLow).Value && json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] < (double)((NumericUpDown)curIndexHigh).Value)
+                            if (Math.Round(json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i], 2) >= (double)((NumericUpDown)curIndexLow).Value && json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] <= (double)((NumericUpDown)curIndexHigh).Value)
                             {
                                 //debug bounds checking
                                 //MessageBox.Show("atr " + (i + 1).ToString() + " falls under index " + (j + 1).ToString(), json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i].ToString());
