@@ -72,6 +72,8 @@ namespace easyNFT
             this.inputNameAtr10 = new System.Windows.Forms.TextBox();
             this.labelQtyAtr10 = new System.Windows.Forms.Label();
             this.labelNameAtr10 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.qtyAtr1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.qtyAtr2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.qtyAtr3)).BeginInit();
@@ -637,11 +639,34 @@ namespace easyNFT
             this.labelNameAtr10.Text = "Name:";
             this.labelNameAtr10.Visible = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 15);
+            this.label1.TabIndex = 43;
+            this.label1.Text = "View from JSON";
+            this.label1.Click += new System.EventHandler(this.lblViewJson_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(385, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(16, 20);
+            this.label2.TabIndex = 44;
+            this.label2.Text = "?";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(402, 476);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.qtyAtr10);
             this.Controls.Add(this.inputNameAtr10);
             this.Controls.Add(this.labelQtyAtr10);
@@ -746,6 +771,8 @@ namespace easyNFT
         private System.Windows.Forms.TextBox inputNameAtr10;
         private System.Windows.Forms.Label labelQtyAtr10;
         private System.Windows.Forms.Label labelNameAtr10;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

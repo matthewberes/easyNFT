@@ -26,28 +26,6 @@ namespace easyNFT
         public string[] n { get; set; }
         public decimal[] q { get; set; }
 
-        public string n1 { get; set; }
-        public string n2 { get; set; }
-        public string n3 { get; set; }
-        public string n4 { get; set; }
-        public string n5 { get; set; }
-        public string n6 { get; set; }
-        public string n7 { get; set; }
-        public string n8 { get; set; }
-        public string n9 { get; set; }
-        public string n10 { get; set; }
-
-        public decimal q1 { get; set; }
-        public decimal q2 { get; set; }
-        public decimal q3 { get; set; }
-        public decimal q4 { get; set; }
-        public decimal q5 { get; set; }
-        public decimal q6 { get; set; }
-        public decimal q7 { get; set; }
-        public decimal q8 { get; set; }
-        public decimal q9 { get; set; }
-        public decimal q10 { get; set; }
-
         //lows
         public decimal lowIndex1Atr1 { get; set; }
         public decimal lowIndex2Atr1 { get; set; }

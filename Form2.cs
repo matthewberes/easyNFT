@@ -923,28 +923,6 @@ namespace easyNFT
                     n = n,
                     q = q,
 
-                    n1 = ((TextBox)ctrlDict.curDict["n1"]).Text,
-                    n2 = ((TextBox)ctrlDict.curDict["n2"]).Text,
-                    n3 = ((TextBox)ctrlDict.curDict["n3"]).Text,
-                    n4 = ((TextBox)ctrlDict.curDict["n4"]).Text,
-                    n5 = ((TextBox)ctrlDict.curDict["n5"]).Text,
-                    n6 = ((TextBox)ctrlDict.curDict["n6"]).Text,
-                    n7 = ((TextBox)ctrlDict.curDict["n7"]).Text,
-                    n8 = ((TextBox)ctrlDict.curDict["n8"]).Text,
-                    n9 = ((TextBox)ctrlDict.curDict["n9"]).Text,
-                    n10 = ((TextBox)ctrlDict.curDict["n10"]).Text,
-
-                    q1 = ((NumericUpDown)ctrlDict.curDict["q1"]).Value,
-                    q2 = ((NumericUpDown)ctrlDict.curDict["q2"]).Value,
-                    q3 = ((NumericUpDown)ctrlDict.curDict["q3"]).Value,
-                    q4 = ((NumericUpDown)ctrlDict.curDict["q4"]).Value,
-                    q5 = ((NumericUpDown)ctrlDict.curDict["q5"]).Value,
-                    q6 = ((NumericUpDown)ctrlDict.curDict["q6"]).Value,
-                    q7 = ((NumericUpDown)ctrlDict.curDict["q7"]).Value,
-                    q8 = ((NumericUpDown)ctrlDict.curDict["q8"]).Value,
-                    q9 = ((NumericUpDown)ctrlDict.curDict["q9"]).Value,
-                    q10 = ((NumericUpDown)ctrlDict.curDict["q10"]).Value,
-
                     //lows
                     lowIndex1Atr1 = ((NumericUpDown)ctrlDict.curDict["lowIndex1Atr1"]).Value,
                     lowIndex2Atr1 = ((NumericUpDown)ctrlDict.curDict["lowIndex2Atr1"]).Value,
@@ -1170,11 +1148,10 @@ namespace easyNFT
 
                 var options = new JsonSerializerOptions() { WriteIndented = true };
                 string json = JsonSerializer.Serialize(boundReadyState, options);
-                //string json = JsonSerializer.Serialize(boundReadyState);
 
                 File.WriteAllText(@"D:\path.json", json);
 
-                Form3 form3 = new Form3(ctrlDict);
+                Form3 form3 = new Form3(ctrlDict, 0);
                 form3.Show();
             }
         }       

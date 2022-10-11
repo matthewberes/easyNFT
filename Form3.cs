@@ -17,11 +17,19 @@ namespace easyNFT
     {
         public string curTemplatePath = @"D:\path.json";
         public static dictionary curControls;
+        public static changedDict jsonChanged;
+        public int changedFlag;
         
-        public Form3(dictionary curDict)
+        public Form3(dictionary curDict, int boolChange)
         {
             InitializeComponent();
             curControls = curDict;
+            changedFlag = boolChange;
+            if(changedFlag == 1)
+            {
+                curTemplatePath = "";
+                curPath.Text = "";
+            }
         }
 
         private void btnChange_Click(object sender, EventArgs e)
@@ -33,18 +41,28 @@ namespace easyNFT
             {
                 curPath.Text = dialog.FileName;
                 curTemplatePath = dialog.FileName;
+
+                //set up for nftView
+                var jsonString = File.ReadAllText(curTemplatePath);
+                changedFlag = 1;
+                List<brs> newVal = JsonConvert.DeserializeObject<List<brs>>(jsonString);
+                changedDict newDict = new changedDict(newVal[0]);
+                jsonChanged = newDict;
+                
             }
         }
 
         private void btnView_Click(object sender, EventArgs e)
         {
-            //Control curPath = this.Controls.Find("curPath", true)[0];
+            if(curTemplatePath == "")
+            {
+                MessageBox.Show("Select a JSON file.", "Empty Field");
+                return;
+            }
 
             var jsonString = File.ReadAllText(curTemplatePath);
 
             List<brs> brsJson = JsonConvert.DeserializeObject<List<brs>>(jsonString);
-            //brs curJSON = brsJson[0];
-            //INTERPRET TIME
             nftView(brsJson[0]);
         }
         private void btnSave_Click(object sender, EventArgs e)
@@ -62,6 +80,7 @@ namespace easyNFT
 
         public void nftView(brs json)
         {
+
             Dictionary<int, Bitmap> bmpDict = new Dictionary<int, Bitmap>();
 
             Dictionary<int, string[]> pathDict = new Dictionary<int, string[]>();
@@ -79,38 +98,83 @@ namespace easyNFT
             Control nftForView = this.Controls.Find("nftSelected", true)[0];
             //check for error, selected nft does not exist, if (nftSelected > curControls.curDict[nftArray].Length)
 
-
-            for(int i = 0; i <= json.atrNum; i++) 
+            if (changedFlag == 1)
             {
-                for(int j = 0; j <= json.q[i]; j++)
+                for (int i = 0; i <= json.atrNum; i++)
                 {
-                    //double curAtrVal = json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i];
-
-                    string tempLow = "lowIndex" + (j + 1).ToString() + "Atr" + (i + 1).ToString();
-                    string tempHigh = "highIndex" + (j + 1).ToString() + "Atr" + (i + 1).ToString();
-
-                    Control curIndexLow = curControls.curDict[tempLow];
-                    Control curIndexHigh = curControls.curDict[tempHigh];
-
-                    if (i < json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes.Length)
+                    for (int j = 0; j <= json.q[i]; j++)
                     {
-                        if (json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] > (double)((NumericUpDown)curIndexLow).Value && json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] < (double)((NumericUpDown)curIndexHigh).Value)
+                        //double curAtrVal = json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i];
+
+                        string tempLow = "lowIndex" + (j + 1).ToString() + "Atr" + (i + 1).ToString();
+                        string tempHigh = "highIndex" + (j + 1).ToString() + "Atr" + (i + 1).ToString();
+
+                        decimal curIndexLow = jsonChanged.curDict[tempLow];
+                        decimal curIndexHigh = jsonChanged.curDict[tempHigh];
+
+                        if(((NumericUpDown)nftForView).Value >= json.nftArray.Length)
                         {
-                            MessageBox.Show("atr " + (i + 1).ToString() + " falls under index " + (j + 1).ToString(), json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i].ToString());
-                            
-                            Bitmap tempPic = new Bitmap(pathDict[i][j]);
-                            bmpDict[i] = tempPic;
-                        
+                            MessageBox.Show("NFT doesn't exist", "NULL");
+                            return;
                         }
-                    }                     
+
+                        if (i < json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes.Length)
+                        {
+                            if (json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] > (double)curIndexLow && json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] < (double)curIndexHigh)
+                            {
+                                //debug bounds checking
+                                //MessageBox.Show("atr " + (i + 1).ToString() + " falls under index " + (j + 1).ToString(), json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i].ToString());
+
+                                Bitmap tempPic = new Bitmap(pathDict[i][j]);
+                                bmpDict[i] = tempPic;
+
+                            }
+                        }
+                    }
+                    if (i == json.atrNum)
+                    {
+                        Form4 form4 = new Form4(bmpDict);
+                        form4.Show();
+                    }
                 }
-                if (i == json.atrNum)
+            }
+            else
+            {
+                for (int i = 0; i <= json.atrNum; i++)
                 {
-                    Form4 form4 = new Form4(bmpDict);
-                    form4.Show();
+                    for (int j = 0; j <= json.q[i]; j++)
+                    {
+                        string tempLow = "lowIndex" + (j + 1).ToString() + "Atr" + (i + 1).ToString();
+                        string tempHigh = "highIndex" + (j + 1).ToString() + "Atr" + (i + 1).ToString();
+                        Control curIndexLow = curControls.curDict[tempLow];
+                        Control curIndexHigh = curControls.curDict[tempHigh];
+
+                        if (((NumericUpDown)nftForView).Value >= json.nftArray.Length)
+                        {
+                            MessageBox.Show("NFT doesn't exist", "NULL");
+                            return;
+                        }
+
+                        if (i < json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes.Length)
+                        {
+                            if (json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] > (double)((NumericUpDown)curIndexLow).Value && json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i] < (double)((NumericUpDown)curIndexHigh).Value)
+                            {
+                                //debug bounds checking
+                                //MessageBox.Show("atr " + (i + 1).ToString() + " falls under index " + (j + 1).ToString(), json.nftArray[(int)((NumericUpDown)nftForView).Value].attributes[i].ToString());
+
+                                Bitmap tempPic = new Bitmap(pathDict[i][j]);
+                                bmpDict[i] = tempPic;
+
+                            }
+                        }
+                    }
+                    if (i == json.atrNum)
+                    {
+                        Form4 form4 = new Form4(bmpDict);
+                        form4.Show();
+                    }
                 }
-            } 
-           
+            }                     
         }
     }
 }
