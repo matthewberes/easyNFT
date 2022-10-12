@@ -1,4 +1,10 @@
-﻿using System;
+﻿//easyNFT nft art builder
+//matt beres, september 2022
+//lets you input images, set bounds, and then it creates all iterations of your nft
+//form2 is the input page, asks for the png files for your nft, the bounds you would like to set for each attribute, and the number of nfts to create
+//opened by form1, opens form3
+
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,8 +22,9 @@ namespace easyNFT
 {
     public partial class Form2 : Form
     {
+        //link to form1
         public Form mainForm;
-
+        //quantity for each atr
         public int globalAtr1;
         public int globalAtr2;
         public int globalAtr3;
@@ -28,7 +35,7 @@ namespace easyNFT
         public int globalAtr8;
         public int globalAtr9;
         public int globalAtr10;
-
+        //placeholder for each upload button
         public OpenFileDialog filesAtr1 = new OpenFileDialog();
         public OpenFileDialog filesAtr2 = new OpenFileDialog();
         public OpenFileDialog filesAtr3 = new OpenFileDialog();
@@ -39,25 +46,27 @@ namespace easyNFT
         public OpenFileDialog filesAtr8 = new OpenFileDialog();
         public OpenFileDialog filesAtr9 = new OpenFileDialog();
         public OpenFileDialog filesAtr10 = new OpenFileDialog();
-
+        //passed userInput from form1
         public userInput curSeshF2 { get; set; }
         public Form2(Form curForm)
         {
             InitializeComponent();
+            //link to form1
             mainForm = curForm;
         }
         private void Form2_Load(object sender, EventArgs e)
         {
+            //place submit button based on the number of attributes
             buttonPlacement();
+            //set labels above each upload button to the names from form1
             setHeaders(this);
-
         }
         public void buttonPlacement()
         {
             Control submitButton = this.Controls.Find("submitButton", true).Single();
             Control submitAmount = this.Controls.Find("submitAmount", true).Single();
             Control submitLbl = this.Controls.Find("submitLbl", true).Single();
-
+            //set location of submit buttons/controls
             switch (this.curSeshF2.totalAtr)
             {
                 case 1:
@@ -112,12 +121,10 @@ namespace easyNFT
                     break;
             }
         }
-
-        //Changes ttlAtr in form 2 to the corresponding user input in form 1
         public void setHeaders(Form2 curForm)
         {
+            //dictionary for all quantity controls
             Dictionary<string, Control> names = new Dictionary<string, Control>();
-
             names["q1"] = curForm.mainForm.Controls.Find("qtyAtr1", true).Single();
             names["q2"] = curForm.mainForm.Controls.Find("qtyAtr2", true).Single();
             names["q3"] = curForm.mainForm.Controls.Find("qtyAtr3", true).Single();
@@ -128,16 +135,17 @@ namespace easyNFT
             names["q8"] = curForm.mainForm.Controls.Find("qtyAtr8", true).Single();
             names["q9"] = curForm.mainForm.Controls.Find("qtyAtr9", true).Single();
             names["q10"] = curForm.mainForm.Controls.Find("qtyAtr10", true).Single();
-
+            //for each atribute, change ttlAtr in form 2 to the corresponding user input in form 1
             for (int i = 1; i <= curForm.curSeshF2.totalAtr; i++)
             {
+                //get control name strings
                 string tempF1 = "inputNameAtr" + i.ToString();
                 string tempF2 = "ttlAtr" + i.ToString();
                 string tempBtn = "btnAtr" + i.ToString();
+                //get controls
                 Control ctrlF1 = curForm.mainForm.Controls.Find(tempF1, true).Single();
                 Control ctrlF2 = curForm.Controls.Find(tempF2, true).Single();
                 Control ctrlBtn = curForm.Controls.Find(tempBtn, true).Single();
-
                 //set up titles and upload buttons
                 ctrlF2.Text = ctrlF1.Text;
                 ctrlF2.Visible = true;
@@ -150,17 +158,20 @@ namespace easyNFT
 
         public void setVisible(Form2 curForm, Control indexNum, int curAtr)
         {
+            //number of desired indexes, quantity from form1
             int qty = ((int)((NumericUpDown)indexNum).Value);
-
+            //for each desired index in the current attribute
             for (int i = 1; i <= qty; i++)
             {
+                //get control name strings
                 string tempLow = "lowIndex" + i.ToString() + "Atr" + curAtr.ToString();
                 string tempHigh = "highIndex" + i.ToString() + "Atr" + curAtr.ToString();
                 string tempLbl = "index" + i.ToString() + "Atr" + curAtr.ToString();
+                //get controls
                 Control ctrlLow = curForm.Controls.Find(tempLow, true).Single();
                 Control ctrlHigh = curForm.Controls.Find(tempHigh, true).Single();
                 Control ctrlLbl = curForm.Controls.Find(tempLbl, true).Single();
-
+                //set control visibility
                 ctrlLow.Visible = true;
                 ctrlHigh.Visible = true;
                 ctrlLbl.Visible = true;
@@ -169,20 +180,23 @@ namespace easyNFT
 
         private void btnAtr1_Click(object sender, EventArgs e)
         {
+            //get file limit for this attribute
             Control maxFile = this.mainForm.Controls.Find("qtyAtr1", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                //error msg if too may files are selected
                 if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
                 {
                     MessageBox.Show("Too many files selected for atr1", "Error: Stack Overflow");
                     return;
                 }
+                //saving quantity of path array locally, saving openfiledialog locally
                 globalAtr1 = dialog.FileNames.Length;
                 filesAtr1 = dialog;
-
+                //change all labels to the selected file names for the corresponding attribute
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -195,20 +209,23 @@ namespace easyNFT
 
         private void btnAtr2_Click(object sender, EventArgs e)
         {
+            //get file limit for this attribute
             Control maxFile = this.mainForm.Controls.Find("qtyAtr2", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                //error msg if too may files are selected
                 if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
                 {
                     MessageBox.Show("Too many files selected for atr2", "Error: Stack Overflow");
                     return;
                 }
+                //saving quantity of path array locally, saving openfiledialog locally
                 globalAtr2 = dialog.FileNames.Length;
                 filesAtr2 = dialog;
-
+                //change all labels to the selected file names for the corresponding attribute
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -221,20 +238,23 @@ namespace easyNFT
 
         private void btnAtr3_Click(object sender, EventArgs e)
         {
+            //get file limit for this attribute
             Control maxFile = this.mainForm.Controls.Find("qtyAtr3", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                //error msg if too may files are selected
                 if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
                 {
                     MessageBox.Show("Too many files selected for atr3", "Error: Stack Overflow");
                     return;
                 }
+                //saving quantity of path array locally, saving openfiledialog locally
                 globalAtr3 = dialog.FileNames.Length;
                 filesAtr3 = dialog;
-
+                //change all labels to the selected file names for the corresponding attribute
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -247,20 +267,23 @@ namespace easyNFT
 
         private void btnAtr4_Click(object sender, EventArgs e)
         {
+            //get file limit for this attribute
             Control maxFile = this.mainForm.Controls.Find("qtyAtr4", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                //error msg if too may files are selected
                 if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
                 {
                     MessageBox.Show("Too many files selected for atr4", "Error: Stack Overflow");
                     return;
                 }
+                //saving quantity of path array locally, saving openfiledialog locally
                 globalAtr4 = dialog.FileNames.Length;
                 filesAtr4 = dialog;
-
+                //change all labels to the selected file names for the corresponding attribute
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -273,20 +296,23 @@ namespace easyNFT
 
         private void btnAtr5_Click(object sender, EventArgs e)
         {
+            //get file limit for this attribute
             Control maxFile = this.mainForm.Controls.Find("qtyAtr5", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                //error msg if too may files are selected
                 if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
                 {
                     MessageBox.Show("Too many files selected for atr5", "Error: Stack Overflow");
                     return;
                 }
+                //saving quantity of path array locally, saving openfiledialog locally
                 globalAtr5 = dialog.FileNames.Length;
                 filesAtr5 = dialog;
-
+                //change all labels to the selected file names for the corresponding attribute
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -299,20 +325,23 @@ namespace easyNFT
 
         private void btnAtr6_Click(object sender, EventArgs e)
         {
+            //get file limit for this attribute
             Control maxFile = this.mainForm.Controls.Find("qtyAtr6", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                //error msg if too may files are selected
                 if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
                 {
                     MessageBox.Show("Too many files selected for atr6", "Error: Stack Overflow");
                     return;
                 }
+                //saving quantity of path array locally, saving openfiledialog locally
                 globalAtr6 = dialog.FileNames.Length;
                 filesAtr6 = dialog;
-
+                //change all labels to the selected file names for the corresponding attribute
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -325,20 +354,23 @@ namespace easyNFT
 
         private void btnAtr7_Click(object sender, EventArgs e)
         {
+            //get file limit for this attribute
             Control maxFile = this.mainForm.Controls.Find("qtyAtr7", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                //error msg if too may files are selected
                 if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
                 {
                     MessageBox.Show("Too many files selected for atr7", "Error: Stack Overflow");
                     return;
                 }
+                //saving quantity of path array locally, saving openfiledialog locally
                 globalAtr7 = dialog.FileNames.Length;
                 filesAtr7 = dialog;
-
+                //change all labels to the selected file names for the corresponding attribute
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -351,20 +383,23 @@ namespace easyNFT
 
         private void btnAtr8_Click(object sender, EventArgs e)
         {
+            //get file limit for this attribute
             Control maxFile = this.mainForm.Controls.Find("qtyAtr8", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                //error msg if too may files are selected
                 if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
                 {
                     MessageBox.Show("Too many files selected for atr8", "Error: Stack Overflow");
                     return;
                 }
+                //saving quantity of path array locally, saving openfiledialog locally
                 globalAtr8 = dialog.FileNames.Length;
                 filesAtr8 = dialog;
-
+                //change all labels to the selected file names for the corresponding attribute
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -377,20 +412,23 @@ namespace easyNFT
 
         private void btnAtr9_Click(object sender, EventArgs e)
         {
+            //get file limit for this attribute
             Control maxFile = this.mainForm.Controls.Find("qtyAtr9", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                //error msg if too may files are selected
                 if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
                 {
                     MessageBox.Show("Too many files selected for atr9", "Error: Stack Overflow");
                     return;
                 }
+                //saving quantity of path array locally, saving openfiledialog locally
                 globalAtr9 = dialog.FileNames.Length;
                 filesAtr9 = dialog;
-
+                //change all labels to the selected file names for the corresponding attribute
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -403,20 +441,23 @@ namespace easyNFT
 
         private void btnAtr10_Click(object sender, EventArgs e)
         {
+            //get file limit for this attribute
             Control maxFile = this.mainForm.Controls.Find("qtyAtr10", true).Single();
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Image files | *.png"; // file types, that will be allowed to upload
             dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
+                //error msg if too may files are selected
                 if (dialog.FileNames.Length > ((int)((NumericUpDown)maxFile).Value))
                 {
                     MessageBox.Show("Too many files selected for atr10", "Error: Stack Overflow");
                     return;
                 }
+                //saving quantity of path array locally, saving openfiledialog locally
                 globalAtr10 = dialog.FileNames.Length;
                 filesAtr10 = dialog;
-
+                //change all labels to the selected file names for the corresponding attribute
                 int i = 1;
                 foreach (String file in dialog.FileNames)
                 {
@@ -427,32 +468,14 @@ namespace easyNFT
             }
         }
 
-        //connects the name string to its corresponding control
-        public class variableNames : Control {
-
-            Control controlName;
-            string name;
-
-            public variableNames(Form curForm, string value)
-            {
-                this.name = value;
-                this.controlName = curForm.Controls.Find(this.name, true).Single();
-            }
-
-            public Control getControl()
-            {
-                //getControl(string value){
-                //Control result = this.Controls.Find(value, true)[0];
-                //return result;}
-                return this.controlName;
-            }
-        }
-        //check for gaps
+        //check for gaps in the bounds, returns 1 if error, 0 if none
         static int boundCheckAtr(Form curForm, int atrVal, int indexNum)
         {
+            //value that gives you the desired sum for an attributes bounds (it is based on the quantity for that attribute)
             decimal curMax = (decimal)(1 - ((indexNum - 1) * 0.01));
+            //dictionary for the index differences (high - low)
             Dictionary<string, decimal> names = new Dictionary<string, decimal>();
-
+            //for each index
             for (int i = 1; i <= indexNum; i++)
             {
                 //currIndexLOW
@@ -463,82 +486,87 @@ namespace easyNFT
                 string curHighString = String.Format("highIndex" + i.ToString() + "Atr" + atrVal.ToString());
                 variableNames curHighClass = new variableNames(curForm, curHighString);
                 Control curHighControl = curHighClass.getControl();
-
                 //nextIndexLOW
                 Control nextLowControl = new Control();
                 string nextLowString = "";
+                //prevIndexHIGH
+                Control prevHighControl = new Control();
+                string prevHighString = "";
+                //doesn't execute on last iteration
                 if (i < indexNum)
                 {
                     nextLowString = String.Format("lowIndex" + (i + 1).ToString() + "Atr" + atrVal.ToString());
                     variableNames nextLowClass = new variableNames(curForm, nextLowString);
                     nextLowControl = nextLowClass.getControl();
                 }
-                //prevIndexHIGH
-                Control prevHighControl = new Control();
-                string prevHighString = "";
+                //doesn't execute on first iteration
                 if (i > 1)
                 {
                     prevHighString = String.Format("highIndex" + (i - 1).ToString() + "Atr" + atrVal.ToString());
                     variableNames prevHighClass = new variableNames(curForm, prevHighString);
                     prevHighControl = prevHighClass.getControl();
                 }
-
-                //if currIndexLOW > currIndexHIGH
+                //if currIndexLOW >= currIndexHIGH
                 if (((NumericUpDown)curLowControl).Value >= ((NumericUpDown)curHighControl).Value)
                 {
-                    //Error
+                    //error msg
                     MessageBox.Show(curLowString + " is larger than or equal to " + curHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return 1;
                 }
-
-                //if currIndexLOW < prevIndexHIGH
+                //doesn't execute on first iteration
                 if (i > 1)
                 {
+                    //if currIndexLOW =< prevIndexHIGH
                     if (((NumericUpDown)curLowControl).Value <= ((NumericUpDown)prevHighControl).Value)
                     {
-                        //Error
+                        //error msg
                         MessageBox.Show(curLowString + " is less than or equal to " + prevHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return 1;
                     }
                 }
-                //if currentIndexHIGH > nextIndexLOW
+                //doesn't execute on last iteration
                 if (i < indexNum)
                 {
-                    decimal nextLowDec = Convert.ToDecimal(((NumericUpDown)nextLowControl).Value);
-                    decimal curHighDec = Convert.ToDecimal(((NumericUpDown)curHighControl).Value);
+                    decimal nextLowDec = ((NumericUpDown)nextLowControl).Value;
+                    decimal curHighDec = ((NumericUpDown)curHighControl).Value;
+                    //if currentIndexHIGH >= nextIndexLOW
                     if (curHighDec >= nextLowDec)
                     {
-                        //Error
+                        //error msg
                         MessageBox.Show(nextLowString + " is less than or equal to " + curHighString, "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return 1;
                     }
                 }
-
                 //check sum initialization
                 string tempVal = "val" + i.ToString();
                 names[tempVal] = ((NumericUpDown)curHighControl).Value - ((NumericUpDown)curLowControl).Value;
             }
             //check sum operation
             decimal sum = 0;
+            //for each index
             foreach (KeyValuePair<string, decimal> entry in names)
             {
                 sum += entry.Value;
+                //error msg, dont think this is possible lol
                 if (sum > 1)
                 {
                     MessageBox.Show("Atr " + atrVal.ToString() + "'s values summed are greater than 1", "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return 1;
                 }
             }
+            //error msg, a gap exists between bounds
             if (sum < curMax)
             {
-                MessageBox.Show("Atr " + atrVal.ToString() + "'s values summed are less than 1", "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Atr " + atrVal.ToString() + " has a gap in it's bounds", "Bound Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 1;
             }
             return 0;
         }
 
+        //error checking for the nft amount, returns 1 if error, 0 if none
         public int getAmount()
         {
+            //get control to see how many nfts to generate
             Control submitAmount = this.Controls.Find("submitAmount", true).Single();
             decimal total = ((NumericUpDown)submitAmount).Value;
             if (total > 0)
@@ -547,7 +575,7 @@ namespace easyNFT
             }
             else
             {
-                //error
+                //error msg, can't accept 0
                 MessageBox.Show("No amount given", "Empty Field", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 1;
             }
@@ -555,14 +583,16 @@ namespace easyNFT
 
         private void submitButton_Click(object sender, EventArgs e)
         {
+            //number of attributes
             Control totalAtr = this.mainForm.Controls.Find("atrNum", true).Single();
+            //error flag boundCheck
             int errorBC = 0;
+            //error flag getAmount
             int errorGA = 0;
-
+            //custom dictionary class, did this to easily transport data from form2 to form3
             dictionary ctrlDict = new dictionary();
 
             ctrlDict.addToDict("submitAmount", this.Controls.Find("submitAmount", true).Single());
-
             ctrlDict.addToDict("atrNum", this.mainForm.Controls.Find("atrNum", true).Single());
 
             ctrlDict.addToDict("n1", this.mainForm.Controls.Find("inputNameAtr1", true).Single());
@@ -808,7 +838,7 @@ namespace easyNFT
             ctrlDict.addToDict("highIndex8Atr10", this.Controls.Find("highIndex8Atr10", true).Single());
             ctrlDict.addToDict("highIndex9Atr10", this.Controls.Find("highIndex9Atr10", true).Single());
             ctrlDict.addToDict("highIndex10Atr10", this.Controls.Find("highIndex10Atr10", true).Single());
-
+            //error msg, not enough files selected
             if (btnAtr1.Visible == true && globalAtr1 < ((NumericUpDown)ctrlDict.curDict["q1"]).Value)
             {
                 MessageBox.Show("Not enough files for atr1", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -859,25 +889,32 @@ namespace easyNFT
                 MessageBox.Show("Not enough files for atr10", "Empty Fields", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            //for each attribute, check bounds
             for (int i = 1; i <= ((ComboBox)totalAtr).SelectedIndex + 1; i++)
             {
+                //create string dynamically
                 string temp = "q" + i.ToString();
-                int test = (int)((NumericUpDown)ctrlDict.curDict[temp]).Value;
-                errorBC = boundCheckAtr(this, i, test);
+                int quantity = (int)((NumericUpDown)ctrlDict.curDict[temp]).Value;
+                errorBC = boundCheckAtr(this, i, quantity);
+                //if error, exit loop
                 if (errorBC == 1) 
                 {
                     i = ((ComboBox)totalAtr).SelectedIndex + 1;
                 }
             }
+            //execute getAmount to check for errors
             errorGA = getAmount();
+            //check error flags, if neither are set
             if (errorBC != 1 && errorGA != 1)
             {
+                //create an array of nft objects
                 nftObject[] nftArray = new nftObject[(int)((NumericUpDown)ctrlDict.curDict["submitAmount"]).Value];
+                //for each desired nft, create the nft object 
                 for(int i = 0; i < nftArray.Length; i++)
                 {
                     nftArray[i] = new nftObject(((ComboBox)totalAtr).SelectedIndex + 1);
                 }
-
+                //initializing variables to put into a brs object, most of these dictionarys need to be changed to arrays in the future
                 string[] n = new string[10];
                 n[0] = ((TextBox)ctrlDict.curDict["n1"]).Text;
                 n[1] = ((TextBox)ctrlDict.curDict["n2"]).Text;
@@ -889,7 +926,6 @@ namespace easyNFT
                 n[7] = ((TextBox)ctrlDict.curDict["n8"]).Text;
                 n[8] = ((TextBox)ctrlDict.curDict["n9"]).Text;
                 n[9] = ((TextBox)ctrlDict.curDict["n10"]).Text;
-
                 decimal[] q = new decimal[10];
                 q[0] = ((NumericUpDown)ctrlDict.curDict["q1"]).Value;
                 q[1] = ((NumericUpDown)ctrlDict.curDict["q2"]).Value;
@@ -901,14 +937,17 @@ namespace easyNFT
                 q[7] = ((NumericUpDown)ctrlDict.curDict["q8"]).Value;
                 q[8] = ((NumericUpDown)ctrlDict.curDict["q9"]).Value;
                 q[9] = ((NumericUpDown)ctrlDict.curDict["q10"]).Value;
-
+                //create brs object using the controls from form1 and form2
                 List<brs> boundReadyState = new List<brs>();
                 boundReadyState.Add(new brs()
                 {
+                    //number of attributes in each nft
                     atrNum = ((ComboBox)ctrlDict.curDict["atrNum"]).SelectedIndex + 1,
+                    //number of nfts
                     submitAmount = ((NumericUpDown)ctrlDict.curDict["submitAmount"]).Value,
+                    //array of nfts
                     nftArray = nftArray,
-
+                    //path string arrays
                     filesAtr1 = filesAtr1.FileNames,
                     filesAtr2 = filesAtr2.FileNames,
                     filesAtr3 = filesAtr3.FileNames,
@@ -918,11 +957,11 @@ namespace easyNFT
                     filesAtr7 = filesAtr7.FileNames,
                     filesAtr8 = filesAtr8.FileNames,
                     filesAtr9 = filesAtr9.FileNames,
-                    filesAtr10 = filesAtr10.FileNames,
-                    
+                    filesAtr10 = filesAtr10.FileNames,   
+                    //names
                     n = n,
+                    //quantities
                     q = q,
-
                     //lows
                     lowIndex1Atr1 = ((NumericUpDown)ctrlDict.curDict["lowIndex1Atr1"]).Value,
                     lowIndex2Atr1 = ((NumericUpDown)ctrlDict.curDict["lowIndex2Atr1"]).Value,
@@ -1145,12 +1184,12 @@ namespace easyNFT
                     highIndex9Atr10 = ((NumericUpDown)ctrlDict.curDict["highIndex9Atr10"]).Value,
                     highIndex10Atr10 = ((NumericUpDown)ctrlDict.curDict["highIndex10Atr10"]).Value
                 });
-
+                //parse json nicely
                 var options = new JsonSerializerOptions() { WriteIndented = true };
                 string json = JsonSerializer.Serialize(boundReadyState, options);
-
+                //save as json
                 File.WriteAllText(@"D:\path.json", json);
-
+                //open form3, send custom dictionary, and a 0 since form3 was opened by form2 (if form3 is opened by form1 then a 1 is passed)
                 Form3 form3 = new Form3(ctrlDict, 0);
                 form3.Show();
             }

@@ -4,14 +4,17 @@ using System.Text;
 
 namespace easyNFT
 {
+    //saves all inputs when form2 is submitted, gets parsed into json
     public class brs
     {
         public brs() { }
+        //number of attributes, form1
         public int atrNum { get; set; }
+        //amount to create, form2
         public decimal submitAmount { get; set; }
-
+        //all the nfts, form2
         public nftObject[] nftArray { get; set; }
-
+        //files paths, form2
         public string[] filesAtr1 { get; set; }
         public string[] filesAtr2 { get; set; }
         public string[] filesAtr3 { get; set; }
@@ -22,11 +25,11 @@ namespace easyNFT
         public string[] filesAtr8 { get; set; }
         public string[] filesAtr9 { get; set; }
         public string[] filesAtr10 { get; set; }
-
+        //names, form1
         public string[] n { get; set; }
+        //quantities, form1
         public decimal[] q { get; set; }
-
-        //lows
+        //lows, form2
         public decimal lowIndex1Atr1 { get; set; }
         public decimal lowIndex2Atr1 { get; set; }
         public decimal lowIndex3Atr1 { get; set; }
@@ -137,7 +140,7 @@ namespace easyNFT
         public decimal lowIndex9Atr10 { get; set; }
         public decimal lowIndex10Atr10 { get; set; }
 
-        //highs               
+        //highs, form2               
         public decimal highIndex1Atr1 { get; set; }
         public decimal highIndex2Atr1 { get; set; }
         public decimal highIndex3Atr1 { get; set; }

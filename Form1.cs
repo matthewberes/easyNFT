@@ -1,4 +1,11 @@
-﻿using System;
+﻿//easyNFT NFT art builder
+//matt beres, september 2022
+//lets you input images, set bounds, and then it creates all iterations of your NFT
+//form1 is the homepage, asks for inputs relating to the attributes of your nft
+//opens form2 or form3
+
+
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,8 +29,9 @@ namespace easyNFT
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //create object that checks for highest quantity, will affect width of form2
             userInput curSesh = new userInput();
-
+            //textboxs
             Control n1 = this.Controls.Find("inputNameAtr1", true).Single();
             Control n2 = this.Controls.Find("inputNameAtr2", true).Single();
             Control n3 = this.Controls.Find("inputNameAtr3", true).Single();
@@ -34,7 +42,7 @@ namespace easyNFT
             Control n8 = this.Controls.Find("inputNameAtr8", true).Single();
             Control n9 = this.Controls.Find("inputNameAtr9", true).Single();
             Control n10 = this.Controls.Find("inputNameAtr10", true).Single();
-
+            //numericupdowns
             Control q1 = this.Controls.Find("qtyAtr1", true).Single();
             Control q2 = this.Controls.Find("qtyAtr2", true).Single();
             Control q3 = this.Controls.Find("qtyAtr3", true).Single();
@@ -45,8 +53,19 @@ namespace easyNFT
             Control q8 = this.Controls.Find("qtyAtr8", true).Single();
             Control q9 = this.Controls.Find("qtyAtr9", true).Single();
             Control q10 = this.Controls.Find("qtyAtr10", true).Single();
-            
-            if(n1.Text == "" && n1.Visible == true)
+            //set userInput quantities
+            curSesh.qtyAtr1 = ((NumericUpDown)q1).Value;
+            curSesh.qtyAtr2 = ((NumericUpDown)q2).Value;
+            curSesh.qtyAtr3 = ((NumericUpDown)q3).Value;
+            curSesh.qtyAtr4 = ((NumericUpDown)q4).Value;
+            curSesh.qtyAtr5 = ((NumericUpDown)q5).Value;
+            curSesh.qtyAtr6 = ((NumericUpDown)q6).Value;
+            curSesh.qtyAtr7 = ((NumericUpDown)q7).Value;
+            curSesh.qtyAtr8 = ((NumericUpDown)q8).Value;
+            curSesh.qtyAtr9 = ((NumericUpDown)q9).Value;
+            curSesh.qtyAtr10 = ((NumericUpDown)q10).Value;
+            //error msg if any textbox is empty
+            if (n1.Text == "" && n1.Visible == true)
             {
                 MessageBox.Show("Atr 1 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -96,45 +115,20 @@ namespace easyNFT
                 MessageBox.Show("Atr 10 Name = NULL", "Empty Value", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            curSesh.nameAtr1 = n1.Text;
-            curSesh.nameAtr2 = n2.Text;
-            curSesh.nameAtr3 = n3.Text;
-            curSesh.nameAtr4 = n4.Text;
-            curSesh.nameAtr5 = n5.Text;
-            curSesh.nameAtr6 = n6.Text;
-            curSesh.nameAtr7 = n7.Text;
-            curSesh.nameAtr8 = n8.Text;
-            curSesh.nameAtr9 = n9.Text;
-            curSesh.nameAtr10 = n10.Text;
-
-            curSesh.qtyAtr1 = ((NumericUpDown)q1).Value;
-            curSesh.qtyAtr2 = ((NumericUpDown)q2).Value;
-            curSesh.qtyAtr3 = ((NumericUpDown)q3).Value;
-            curSesh.qtyAtr4 = ((NumericUpDown)q4).Value;
-            curSesh.qtyAtr5 = ((NumericUpDown)q5).Value;
-            curSesh.qtyAtr6 = ((NumericUpDown)q6).Value;
-            curSesh.qtyAtr7 = ((NumericUpDown)q7).Value;
-            curSesh.qtyAtr8 = ((NumericUpDown)q8).Value;
-            curSesh.qtyAtr9 = ((NumericUpDown)q9).Value;
-            curSesh.qtyAtr10 = ((NumericUpDown)q10).Value;
-
+            //check what atribute has the highest quantity
             curSesh.highestQty = curSesh.getHighest(this);
-
+            //get number of attributes
             Control atrQty = this.Controls.Find("atrNum", true).Single();
             curSesh.totalAtr = ((ComboBox)atrQty).SelectedIndex + 1;
-
+            //create form2
             Form2 inputValues = new Form2(this);
+            //pass controls
             inputValues.curSeshF2 = curSesh;
-
+            //set width and height
             int x = 0;
             int y = 0;
-
             switch (curSesh.highestQty)
             {
-                case 0:
-                    x = 321;
-                    break;
                 case 1:
                     x = 321;
                     break;
@@ -166,12 +160,8 @@ namespace easyNFT
                     x = 1470;
                     break;
             }
-
             switch (curSesh.totalAtr)
             {
-                case 0:
-                    y = 210;
-                    break;
                 case 1:
                     y = 210;
                     break;
@@ -203,7 +193,7 @@ namespace easyNFT
                     y = 1060;
                     break;
             }
-
+            //open form2 with proper size
             inputValues.Size = new Size(x, y);
             inputValues.Show();
         }
@@ -211,7 +201,6 @@ namespace easyNFT
         private void atrNum_SelectedValueChanged(object sender, EventArgs e)
         {
             Dictionary<string, Control> names = new Dictionary<string, Control>();
-
             names["labelNameAtr1"] = labelNameAtr1;
             names["labelNameAtr2"] = labelNameAtr2;
             names["labelNameAtr3"] = labelNameAtr3;
@@ -255,22 +244,20 @@ namespace easyNFT
             names["qtyAtr8"] = qtyAtr8;
             names["qtyAtr9"] = qtyAtr9;
             names["qtyAtr10"] = qtyAtr10;
-
+            //submit button
             button1.Visible = true;
-
             switch (atrNum.SelectedItem.ToString())
             {
                 case "1":
+                    //change window size
                     this.Size = new Size(420, 235);
                     button1.Location = new Point(155, 135);
-
                     //visible
                     for(int i = 1; i < 2; i++) {
                         string curNameLabel = "labelNameAtr" + i;
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-
                         names[curNameLabel].Visible = true;
                         names[curNameInput].Visible = true;
                         names[curQtyLabel].Visible = true;
@@ -282,7 +269,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-
                         names[curNameLabel].Visible = false;
                         names[curNameInput].Visible = false;
                         names[curQtyLabel].Visible = false;
@@ -290,9 +276,9 @@ namespace easyNFT
                     }
                     break;
                 case "2":
+                    //change window size
                     this.Size = new Size(420, 270);
                     button1.Location = new Point(155, 170);
-
                     //visible
                     for (int i = 1; i < 3; i++)
                     {
@@ -300,7 +286,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-
                         names[curNameLabel].Visible = true;
                         names[curNameInput].Visible = true;
                         names[curQtyLabel].Visible = true;
@@ -313,7 +298,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-
                         names[curNameLabel].Visible = false;
                         names[curNameInput].Visible = false;
                         names[curQtyLabel].Visible = false;
@@ -321,9 +305,9 @@ namespace easyNFT
                     }
                     break;
                 case "3":
+                    //change window size
                     this.Size = new Size(420, 305);
                     button1.Location = new Point(155, 205);
-
                     //visible
                     for (int i = 1; i < 4; i++)
                     {
@@ -331,7 +315,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-
                         names[curNameLabel].Visible = true;
                         names[curNameInput].Visible = true;
                         names[curQtyLabel].Visible = true;
@@ -344,7 +327,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-
                         names[curNameLabel].Visible = false;
                         names[curNameInput].Visible = false;
                         names[curQtyLabel].Visible = false;
@@ -352,9 +334,9 @@ namespace easyNFT
                     }
                     break;
                 case "4":
+                    //change window size
                     this.Size = new Size(420, 340);
                     button1.Location = new Point(155, 240);
-
                     //visible
                     for (int i = 1; i < 5; i++)
                     {
@@ -362,7 +344,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-
                         names[curNameLabel].Visible = true;
                         names[curNameInput].Visible = true;
                         names[curQtyLabel].Visible = true;
@@ -375,7 +356,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-
                         names[curNameLabel].Visible = false;
                         names[curNameInput].Visible = false;
                         names[curQtyLabel].Visible = false;
@@ -383,9 +363,9 @@ namespace easyNFT
                     }
                     break;
                 case "5":
+                    //change window size
                     this.Size = new Size(420, 375);
                     button1.Location = new Point(155, 275);
-
                     //visible
                     for (int i = 1; i < 6; i++)
                     {
@@ -393,7 +373,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-
                         names[curNameLabel].Visible = true;
                         names[curNameInput].Visible = true;
                         names[curQtyLabel].Visible = true;
@@ -406,7 +385,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-
                         names[curNameLabel].Visible = false;
                         names[curNameInput].Visible = false;
                         names[curQtyLabel].Visible = false;
@@ -414,9 +392,9 @@ namespace easyNFT
                     }
                     break;
                 case "6":
+                    //change window size
                     this.Size = new Size(420, 410);
                     button1.Location = new Point(155, 310);
-
                     //visible
                     for (int i = 1; i < 7; i++)
                     {
@@ -424,7 +402,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-
                         names[curNameLabel].Visible = true;
                         names[curNameInput].Visible = true;
                         names[curQtyLabel].Visible = true;
@@ -437,7 +414,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-
                         names[curNameLabel].Visible = false;
                         names[curNameInput].Visible = false;
                         names[curQtyLabel].Visible = false;
@@ -445,9 +421,9 @@ namespace easyNFT
                     }
                     break;
                 case "7":
+                    //change window size
                     this.Size = new Size(420, 445);
                     button1.Location = new Point(155, 345);
-
                     //visible
                     for (int i = 1; i < 8; i++)
                     {
@@ -455,7 +431,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-
                         names[curNameLabel].Visible = true;
                         names[curNameInput].Visible = true;
                         names[curQtyLabel].Visible = true;
@@ -468,7 +443,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-
                         names[curNameLabel].Visible = false;
                         names[curNameInput].Visible = false;
                         names[curQtyLabel].Visible = false;
@@ -476,9 +450,9 @@ namespace easyNFT
                     }
                     break;
                 case "8":
+                    //change window size
                     this.Size = new Size(420, 480);
                     button1.Location = new Point(155, 380);
-
                     //visible
                     for (int i = 1; i < 9; i++)
                     {
@@ -486,7 +460,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-
                         names[curNameLabel].Visible = true;
                         names[curNameInput].Visible = true;
                         names[curQtyLabel].Visible = true;
@@ -499,7 +472,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-
                         names[curNameLabel].Visible = false;
                         names[curNameInput].Visible = false;
                         names[curQtyLabel].Visible = false;
@@ -507,9 +479,9 @@ namespace easyNFT
                     }
                     break;
                 case "9":
+                    //change window size
                     this.Size = new Size(420, 515);
                     button1.Location = new Point(155, 415);
-
                     //visible
                     for (int i = 1; i < 10; i++)
                     {
@@ -517,7 +489,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-
                         names[curNameLabel].Visible = true;
                         names[curNameInput].Visible = true;
                         names[curQtyLabel].Visible = true;
@@ -530,7 +501,6 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-
                         names[curNameLabel].Visible = false;
                         names[curNameInput].Visible = false;
                         names[curQtyLabel].Visible = false;
@@ -538,9 +508,9 @@ namespace easyNFT
                     }
                     break;
                 case "10":
+                    //change window size
                     this.Size = new Size(420, 545);
                     button1.Location = new Point(155, 445);
-
                     //visible
                     for (int i = 1; i < 11; i++)
                     {
@@ -548,19 +518,18 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-
                         names[curNameLabel].Visible = true;
                         names[curNameInput].Visible = true;
                         names[curQtyLabel].Visible = true;
                         names[curQtyInput].Visible = true;
                     }
                     break;
-
             }
         }
 
         private void lblViewJson_Click(object sender, EventArgs e)
         {
+            //go straight to form3
             Form3 form3 = new Form3(new dictionary(), 1);
             form3.Show();
         }

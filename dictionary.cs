@@ -5,10 +5,10 @@ using System.Windows.Forms;
 
 namespace easyNFT
 {
+    //dictionary for controls, used by form3 if no path change has occured
     public class dictionary
     {
         public Dictionary<string, Control> curDict;
-
         public dictionary()
         {
             curDict = new Dictionary<string, Control>();            

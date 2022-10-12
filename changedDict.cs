@@ -4,15 +4,14 @@ using System.Text;
 
 namespace easyNFT
 {
+    //dictionary for values, used by form3 if a path change has occured
     public class changedDict
     {
         public Dictionary<string, decimal> curDict;
-
-        
         public changedDict(brs json)
         {
+            //used as dynamic variable names
             Dictionary<string, decimal> names = new Dictionary<string, decimal>();
-
             //lows
             names["lowIndex1Atr1"] = json.lowIndex1Atr1;
             names["lowIndex2Atr1"] = json.lowIndex2Atr1;
@@ -234,7 +233,7 @@ namespace easyNFT
             names["highIndex8Atr10"] = json.highIndex8Atr10;
             names["highIndex9Atr10"] = json.highIndex9Atr10;
             names["highIndex10Atr10"] = json.highIndex10Atr10;
-
+            //save dictionary locally
             curDict = names;
         }
     }
