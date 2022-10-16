@@ -147,7 +147,6 @@ namespace easyNFT
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnChange;
         private System.Windows.Forms.TextBox curPath;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown nftSelected;
         private System.Windows.Forms.Button btnSave;
     }

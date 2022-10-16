@@ -7456,7 +7456,6 @@ namespace easyNFT
         private System.Windows.Forms.Button btnAtr1;
         private System.Windows.Forms.Label ttlAtr1;
         private System.Windows.Forms.Button submitButton;
-        private System.Windows.Forms.Button bmitB;
         private System.Windows.Forms.Label submitLbl;
         private System.Windows.Forms.NumericUpDown submitAmount;
     }

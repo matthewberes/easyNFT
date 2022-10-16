@@ -47,7 +47,7 @@ namespace easyNFT
         public OpenFileDialog filesAtr9 = new OpenFileDialog();
         public OpenFileDialog filesAtr10 = new OpenFileDialog();
         //passed userInput from form1
-        public userInput curSeshF2 { get; set; }
+        public userInput windowSizing { get; set; }
         public Form2(Form curForm)
         {
             InitializeComponent();
@@ -67,7 +67,7 @@ namespace easyNFT
             Control submitAmount = this.Controls.Find("submitAmount", true).Single();
             Control submitLbl = this.Controls.Find("submitLbl", true).Single();
             //set location of submit buttons/controls
-            switch (this.curSeshF2.totalAtr)
+            switch (this.windowSizing.totalAtr)
             {
                 case 1:
                     submitButton.Location = new Point(66, 130);
@@ -136,7 +136,7 @@ namespace easyNFT
             names["q9"] = curForm.mainForm.Controls.Find("qtyAtr9", true).Single();
             names["q10"] = curForm.mainForm.Controls.Find("qtyAtr10", true).Single();
             //for each atribute, change ttlAtr in form 2 to the corresponding user input in form 1
-            for (int i = 1; i <= curForm.curSeshF2.totalAtr; i++)
+            for (int i = 1; i <= curForm.windowSizing.totalAtr; i++)
             {
                 //get control name strings
                 string tempF1 = "inputNameAtr" + i.ToString();
@@ -590,7 +590,7 @@ namespace easyNFT
             //error flag getAmount
             int errorGA = 0;
             //custom dictionary class, did this to easily transport data from form2 to form3
-            dictionary ctrlDict = new dictionary();
+            controlDict ctrlDict = new controlDict();
 
             ctrlDict.addToDict("submitAmount", this.Controls.Find("submitAmount", true).Single());
             ctrlDict.addToDict("atrNum", this.mainForm.Controls.Find("atrNum", true).Single());

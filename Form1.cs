@@ -21,10 +21,55 @@ namespace easyNFT
 {
     public partial class Form1 : Form
     {
+        Dictionary<string, Control> names = new Dictionary<string, Control>();
+        
         public Form1()
         {
             InitializeComponent();
             this.Size = new Size(420, 150);
+            names["labelNameAtr1"] = labelNameAtr1;
+            names["labelNameAtr2"] = labelNameAtr2;
+            names["labelNameAtr3"] = labelNameAtr3;
+            names["labelNameAtr4"] = labelNameAtr4;
+            names["labelNameAtr5"] = labelNameAtr5;
+            names["labelNameAtr6"] = labelNameAtr6;
+            names["labelNameAtr7"] = labelNameAtr7;
+            names["labelNameAtr8"] = labelNameAtr8;
+            names["labelNameAtr9"] = labelNameAtr9;
+            names["labelNameAtr10"] = labelNameAtr10;
+
+            names["inputNameAtr1"] = inputNameAtr1;
+            names["inputNameAtr2"] = inputNameAtr2;
+            names["inputNameAtr3"] = inputNameAtr3;
+            names["inputNameAtr4"] = inputNameAtr4;
+            names["inputNameAtr5"] = inputNameAtr5;
+            names["inputNameAtr6"] = inputNameAtr6;
+            names["inputNameAtr7"] = inputNameAtr7;
+            names["inputNameAtr8"] = inputNameAtr8;
+            names["inputNameAtr9"] = inputNameAtr9;
+            names["inputNameAtr10"] = inputNameAtr10;
+
+            names["labelQtyAtr1"] = labelQtyAtr1;
+            names["labelQtyAtr2"] = labelQtyAtr2;
+            names["labelQtyAtr3"] = labelQtyAtr3;
+            names["labelQtyAtr4"] = labelQtyAtr4;
+            names["labelQtyAtr5"] = labelQtyAtr5;
+            names["labelQtyAtr6"] = labelQtyAtr6;
+            names["labelQtyAtr7"] = labelQtyAtr7;
+            names["labelQtyAtr8"] = labelQtyAtr8;
+            names["labelQtyAtr9"] = labelQtyAtr9;
+            names["labelQtyAtr10"] = labelQtyAtr10;
+
+            names["qtyAtr1"] = qtyAtr1;
+            names["qtyAtr2"] = qtyAtr2;
+            names["qtyAtr3"] = qtyAtr3;
+            names["qtyAtr4"] = qtyAtr4;
+            names["qtyAtr5"] = qtyAtr5;
+            names["qtyAtr6"] = qtyAtr6;
+            names["qtyAtr7"] = qtyAtr7;
+            names["qtyAtr8"] = qtyAtr8;
+            names["qtyAtr9"] = qtyAtr9;
+            names["qtyAtr10"] = qtyAtr10;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -52,18 +97,7 @@ namespace easyNFT
             Control q7 = this.Controls.Find("qtyAtr7", true).Single();
             Control q8 = this.Controls.Find("qtyAtr8", true).Single();
             Control q9 = this.Controls.Find("qtyAtr9", true).Single();
-            Control q10 = this.Controls.Find("qtyAtr10", true).Single();
-            //set userInput quantities
-            curSesh.qtyAtr1 = ((NumericUpDown)q1).Value;
-            curSesh.qtyAtr2 = ((NumericUpDown)q2).Value;
-            curSesh.qtyAtr3 = ((NumericUpDown)q3).Value;
-            curSesh.qtyAtr4 = ((NumericUpDown)q4).Value;
-            curSesh.qtyAtr5 = ((NumericUpDown)q5).Value;
-            curSesh.qtyAtr6 = ((NumericUpDown)q6).Value;
-            curSesh.qtyAtr7 = ((NumericUpDown)q7).Value;
-            curSesh.qtyAtr8 = ((NumericUpDown)q8).Value;
-            curSesh.qtyAtr9 = ((NumericUpDown)q9).Value;
-            curSesh.qtyAtr10 = ((NumericUpDown)q10).Value;
+            Control q10 = this.Controls.Find("qtyAtr10", true).Single();           
             //error msg if any textbox is empty
             if (n1.Text == "" && n1.Visible == true)
             {
@@ -121,9 +155,9 @@ namespace easyNFT
             Control atrQty = this.Controls.Find("atrNum", true).Single();
             curSesh.totalAtr = ((ComboBox)atrQty).SelectedIndex + 1;
             //create form2
-            Form2 inputValues = new Form2(this);
+            Form2 form2 = new Form2(this);
             //pass controls
-            inputValues.curSeshF2 = curSesh;
+            form2.windowSizing = curSesh;
             //set width and height
             int x = 0;
             int y = 0;
@@ -194,56 +228,12 @@ namespace easyNFT
                     break;
             }
             //open form2 with proper size
-            inputValues.Size = new Size(x, y);
-            inputValues.Show();
+            form2.Size = new Size(x, y);
+            form2.Show();
         }
 
         private void atrNum_SelectedValueChanged(object sender, EventArgs e)
-        {
-            Dictionary<string, Control> names = new Dictionary<string, Control>();
-            names["labelNameAtr1"] = labelNameAtr1;
-            names["labelNameAtr2"] = labelNameAtr2;
-            names["labelNameAtr3"] = labelNameAtr3;
-            names["labelNameAtr4"] = labelNameAtr4;
-            names["labelNameAtr5"] = labelNameAtr5;
-            names["labelNameAtr6"] = labelNameAtr6;
-            names["labelNameAtr7"] = labelNameAtr7;
-            names["labelNameAtr8"] = labelNameAtr8;
-            names["labelNameAtr9"] = labelNameAtr9;
-            names["labelNameAtr10"] = labelNameAtr10;
-
-            names["inputNameAtr1"] = inputNameAtr1;
-            names["inputNameAtr2"] = inputNameAtr2;
-            names["inputNameAtr3"] = inputNameAtr3;
-            names["inputNameAtr4"] = inputNameAtr4;
-            names["inputNameAtr5"] = inputNameAtr5;
-            names["inputNameAtr6"] = inputNameAtr6;
-            names["inputNameAtr7"] = inputNameAtr7;
-            names["inputNameAtr8"] = inputNameAtr8;
-            names["inputNameAtr9"] = inputNameAtr9;
-            names["inputNameAtr10"] = inputNameAtr10;
-
-            names["labelQtyAtr1"] = labelQtyAtr1;
-            names["labelQtyAtr2"] = labelQtyAtr2;
-            names["labelQtyAtr3"] = labelQtyAtr3;
-            names["labelQtyAtr4"] = labelQtyAtr4;
-            names["labelQtyAtr5"] = labelQtyAtr5;
-            names["labelQtyAtr6"] = labelQtyAtr6;
-            names["labelQtyAtr7"] = labelQtyAtr7;
-            names["labelQtyAtr8"] = labelQtyAtr8;
-            names["labelQtyAtr9"] = labelQtyAtr9;
-            names["labelQtyAtr10"] = labelQtyAtr10;
-
-            names["qtyAtr1"] = qtyAtr1;
-            names["qtyAtr2"] = qtyAtr2;
-            names["qtyAtr3"] = qtyAtr3;
-            names["qtyAtr4"] = qtyAtr4;
-            names["qtyAtr5"] = qtyAtr5;
-            names["qtyAtr6"] = qtyAtr6;
-            names["qtyAtr7"] = qtyAtr7;
-            names["qtyAtr8"] = qtyAtr8;
-            names["qtyAtr9"] = qtyAtr9;
-            names["qtyAtr10"] = qtyAtr10;
+        {            
             //submit button
             button1.Visible = true;
             switch (atrNum.SelectedItem.ToString())
@@ -258,10 +248,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-                        names[curNameLabel].Visible = true;
-                        names[curNameInput].Visible = true;
-                        names[curQtyLabel].Visible = true;
-                        names[curQtyInput].Visible = true;
+                        this.names[curNameLabel].Visible = true;
+                        this.names[curNameInput].Visible = true;
+                        this.names[curQtyLabel].Visible = true;
+                        this.names[curQtyInput].Visible = true;
                     }
                     //invisible
                     for (int j = 2; j < 11; j++) {
@@ -269,10 +259,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-                        names[curNameLabel].Visible = false;
-                        names[curNameInput].Visible = false;
-                        names[curQtyLabel].Visible = false;
-                        names[curQtyInput].Visible = false;
+                        this.names[curNameLabel].Visible = false;
+                        this.names[curNameInput].Visible = false;
+                        this.names[curQtyLabel].Visible = false;
+                        this.names[curQtyInput].Visible = false;
                     }
                     break;
                 case "2":
@@ -286,10 +276,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-                        names[curNameLabel].Visible = true;
-                        names[curNameInput].Visible = true;
-                        names[curQtyLabel].Visible = true;
-                        names[curQtyInput].Visible = true;
+                        this.names[curNameLabel].Visible = true;
+                        this.names[curNameInput].Visible = true;
+                        this.names[curQtyLabel].Visible = true;
+                        this.names[curQtyInput].Visible = true;
                     }
                     //invisible
                     for (int j = 3; j < 11; j++)
@@ -298,10 +288,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-                        names[curNameLabel].Visible = false;
-                        names[curNameInput].Visible = false;
-                        names[curQtyLabel].Visible = false;
-                        names[curQtyInput].Visible = false;
+                        this.names[curNameLabel].Visible = false;
+                        this.names[curNameInput].Visible = false;
+                        this.names[curQtyLabel].Visible = false;
+                        this.names[curQtyInput].Visible = false;
                     }
                     break;
                 case "3":
@@ -315,10 +305,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-                        names[curNameLabel].Visible = true;
-                        names[curNameInput].Visible = true;
-                        names[curQtyLabel].Visible = true;
-                        names[curQtyInput].Visible = true;
+                        this.names[curNameLabel].Visible = true;
+                        this.names[curNameInput].Visible = true;
+                        this.names[curQtyLabel].Visible = true;
+                        this.names[curQtyInput].Visible = true;
                     }
                     //invisible
                     for (int j = 4; j < 11; j++)
@@ -327,10 +317,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-                        names[curNameLabel].Visible = false;
-                        names[curNameInput].Visible = false;
-                        names[curQtyLabel].Visible = false;
-                        names[curQtyInput].Visible = false;
+                        this.names[curNameLabel].Visible = false;
+                        this.names[curNameInput].Visible = false;
+                        this.names[curQtyLabel].Visible = false;
+                        this.names[curQtyInput].Visible = false;
                     }
                     break;
                 case "4":
@@ -344,10 +334,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-                        names[curNameLabel].Visible = true;
-                        names[curNameInput].Visible = true;
-                        names[curQtyLabel].Visible = true;
-                        names[curQtyInput].Visible = true;
+                        this.names[curNameLabel].Visible = true;
+                        this.names[curNameInput].Visible = true;
+                        this.names[curQtyLabel].Visible = true;
+                        this.names[curQtyInput].Visible = true;
                     }
                     //invisible
                     for (int j = 5; j < 11; j++)
@@ -356,10 +346,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-                        names[curNameLabel].Visible = false;
-                        names[curNameInput].Visible = false;
-                        names[curQtyLabel].Visible = false;
-                        names[curQtyInput].Visible = false;
+                        this.names[curNameLabel].Visible = false;
+                        this.names[curNameInput].Visible = false;
+                        this.names[curQtyLabel].Visible = false;
+                        this.names[curQtyInput].Visible = false;
                     }
                     break;
                 case "5":
@@ -373,10 +363,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-                        names[curNameLabel].Visible = true;
-                        names[curNameInput].Visible = true;
-                        names[curQtyLabel].Visible = true;
-                        names[curQtyInput].Visible = true;
+                        this.names[curNameLabel].Visible = true;
+                        this.names[curNameInput].Visible = true;
+                        this.names[curQtyLabel].Visible = true;
+                        this.names[curQtyInput].Visible = true;
                     }
                     //invisible
                     for (int j = 6; j < 11; j++)
@@ -385,10 +375,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-                        names[curNameLabel].Visible = false;
-                        names[curNameInput].Visible = false;
-                        names[curQtyLabel].Visible = false;
-                        names[curQtyInput].Visible = false;
+                        this.names[curNameLabel].Visible = false;
+                        this.names[curNameInput].Visible = false;
+                        this.names[curQtyLabel].Visible = false;
+                        this.names[curQtyInput].Visible = false;
                     }
                     break;
                 case "6":
@@ -402,10 +392,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-                        names[curNameLabel].Visible = true;
-                        names[curNameInput].Visible = true;
-                        names[curQtyLabel].Visible = true;
-                        names[curQtyInput].Visible = true;
+                        this.names[curNameLabel].Visible = true;
+                        this.names[curNameInput].Visible = true;
+                        this.names[curQtyLabel].Visible = true;
+                        this.names[curQtyInput].Visible = true;
                     }
                     //invisible
                     for (int j = 7; j < 11; j++)
@@ -414,10 +404,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-                        names[curNameLabel].Visible = false;
-                        names[curNameInput].Visible = false;
-                        names[curQtyLabel].Visible = false;
-                        names[curQtyInput].Visible = false;
+                        this.names[curNameLabel].Visible = false;
+                        this.names[curNameInput].Visible = false;
+                        this.names[curQtyLabel].Visible = false;
+                        this.names[curQtyInput].Visible = false;
                     }
                     break;
                 case "7":
@@ -431,10 +421,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-                        names[curNameLabel].Visible = true;
-                        names[curNameInput].Visible = true;
-                        names[curQtyLabel].Visible = true;
-                        names[curQtyInput].Visible = true;
+                        this.names[curNameLabel].Visible = true;
+                        this.names[curNameInput].Visible = true;
+                        this.names[curQtyLabel].Visible = true;
+                        this.names[curQtyInput].Visible = true;
                     }
                     //invisible
                     for (int j = 8; j < 11; j++)
@@ -443,10 +433,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-                        names[curNameLabel].Visible = false;
-                        names[curNameInput].Visible = false;
-                        names[curQtyLabel].Visible = false;
-                        names[curQtyInput].Visible = false;
+                        this.names[curNameLabel].Visible = false;
+                        this.names[curNameInput].Visible = false;
+                        this.names[curQtyLabel].Visible = false;
+                        this.names[curQtyInput].Visible = false;
                     }
                     break;
                 case "8":
@@ -460,10 +450,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-                        names[curNameLabel].Visible = true;
-                        names[curNameInput].Visible = true;
-                        names[curQtyLabel].Visible = true;
-                        names[curQtyInput].Visible = true;
+                        this.names[curNameLabel].Visible = true;
+                        this.names[curNameInput].Visible = true;
+                        this.names[curQtyLabel].Visible = true;
+                        this.names[curQtyInput].Visible = true;
                     }
                     //invisible
                     for (int j = 9; j < 11; j++)
@@ -472,10 +462,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-                        names[curNameLabel].Visible = false;
-                        names[curNameInput].Visible = false;
-                        names[curQtyLabel].Visible = false;
-                        names[curQtyInput].Visible = false;
+                        this.names[curNameLabel].Visible = false;
+                        this.names[curNameInput].Visible = false;
+                        this.names[curQtyLabel].Visible = false;
+                        this.names[curQtyInput].Visible = false;
                     }
                     break;
                 case "9":
@@ -489,10 +479,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-                        names[curNameLabel].Visible = true;
-                        names[curNameInput].Visible = true;
-                        names[curQtyLabel].Visible = true;
-                        names[curQtyInput].Visible = true;
+                        this.names[curNameLabel].Visible = true;
+                        this.names[curNameInput].Visible = true;
+                        this.names[curQtyLabel].Visible = true;
+                        this.names[curQtyInput].Visible = true;
                     }
                     //invisible
                     for (int j = 10; j < 11; j++)
@@ -501,10 +491,10 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + j;
                         string curQtyLabel = "labelQtyAtr" + j;
                         string curQtyInput = "qtyAtr" + j;
-                        names[curNameLabel].Visible = false;
-                        names[curNameInput].Visible = false;
-                        names[curQtyLabel].Visible = false;
-                        names[curQtyInput].Visible = false;
+                        this.names[curNameLabel].Visible = false;
+                        this.names[curNameInput].Visible = false;
+                        this.names[curQtyLabel].Visible = false;
+                        this.names[curQtyInput].Visible = false;
                     }
                     break;
                 case "10":
@@ -518,19 +508,19 @@ namespace easyNFT
                         string curNameInput = "inputNameAtr" + i;
                         string curQtyLabel = "labelQtyAtr" + i;
                         string curQtyInput = "qtyAtr" + i;
-                        names[curNameLabel].Visible = true;
-                        names[curNameInput].Visible = true;
-                        names[curQtyLabel].Visible = true;
-                        names[curQtyInput].Visible = true;
+                        this.names[curNameLabel].Visible = true;
+                        this.names[curNameInput].Visible = true;
+                        this.names[curQtyLabel].Visible = true;
+                        this.names[curQtyInput].Visible = true;
                     }
                     break;
             }
         }
-
+        //when you click on "View from JSON"
         private void lblViewJson_Click(object sender, EventArgs e)
         {
             //go straight to form3
-            Form3 form3 = new Form3(new dictionary(), 1);
+            Form3 form3 = new Form3(new controlDict(), 1);
             form3.Show();
         }
     }    

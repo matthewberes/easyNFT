@@ -24,13 +24,13 @@ namespace easyNFT
         //if form3 is opened from form2 this path will be the default
         public string curTemplatePath = @"D:\path.json";
         //controls when form3 is opened by form2
-        public static dictionary curControls;
+        public static controlDict curControls;
         //controls when form3 is opened by form1
         public static changedDict jsonChanged;
         //tells you if the change button was pressed, new path
         public int changedFlag;
         
-        public Form3(dictionary curDict, int boolChange)
+        public Form3(controlDict curDict, int boolChange)
         {
             InitializeComponent();
             curControls = curDict;
@@ -62,8 +62,7 @@ namespace easyNFT
                 List<brs> newVal = JsonConvert.DeserializeObject<List<brs>>(jsonString);
                 changedDict newDict = new changedDict(newVal[0]);
                 //save dictionary locally
-                jsonChanged = newDict;
-                
+                jsonChanged = newDict;                
             }
         }
 
